@@ -1,16 +1,24 @@
 :root {
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono',
-    'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono',
-    'Courier New', monospace;
-  --color-text-main: #333;
-  --color-text-sub: #999;
-  --color-bg-main: #fff;
-  --color-bg-sub: #f3f3f3;
-  --color-bg-code: #fafafa;
-  --color-border-dark: #ccc;
-  --color-border: #ddd;
-  --color-border-light: #f3f3f3;
-  --color-current: #eee;
+  /* --- design tokens --- */
+  --color-bg: #fafbfc;
+  --color-ink: #1a2330;
+  --color-sub: #5b6572;
+  --color-accent: #0087a8;
+  --color-accent-bright: #00add8;
+  --color-line: #e3e8ed;
+  --color-code-bg: #f0f3f6;
+
+  /* --- legacy aliases (kept so existing component CSS modules pick up the new palette
+     without a rewrite; new code should prefer the tokens above) --- */
+  --color-text-main: var(--color-ink);
+  --color-text-sub: var(--color-sub);
+  --color-bg-main: var(--color-bg);
+  --color-bg-sub: var(--color-code-bg);
+  --color-bg-code: var(--color-code-bg);
+  --color-border-dark: #c4ccd4;
+  --color-border: var(--color-line);
+  --color-border-light: var(--color-line);
+  --color-current: #e8eef2;
   --border-radius: 4px;
 }
 
@@ -27,14 +35,25 @@ body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', YuGothic, 'ヒラギノ角ゴ ProN W3',
-    Hiragino Kaku Gothic ProN, Arial, 'メイリオ', Meiryo, sans-serif;
-  color: var(--color-text-main);
+  font-family: var(--font-body), -apple-system, BlinkMacSystemFont, 'Helvetica Neue', YuGothic,
+    'ヒラギノ角ゴ ProN W3', Hiragino Kaku Gothic ProN, Arial, 'メイリオ', Meiryo, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
   line-height: 1.8;
 }
 
-code {
-  font-family: menlo, inconsolata, monospace;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), var(--font-body), sans-serif;
+}
+
+code,
+pre {
+  font-family: var(--font-mono), menlo, inconsolata, monospace;
 }
 
 a {
@@ -45,4 +64,20 @@ a {
 ol,
 ul {
   list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

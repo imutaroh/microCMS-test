@@ -25,7 +25,7 @@ export default function ArticleListItem({ article }: Props) {
               srcSet={`${article.thumbnail?.url}?fm=webp&fit=crop&w=240&h=126 1x, ${article.thumbnail?.url}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
             />
             <img
-              src={article.thumbnail?.url || `/noimage.png`}
+              src={article.thumbnail?.url || `/no-image.png`}
               alt=""
               className={styles.image}
               width={article.thumbnail?.width}

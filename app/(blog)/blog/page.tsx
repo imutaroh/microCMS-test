@@ -1,8 +1,15 @@
+import { Metadata } from 'next';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
-import Hero from '@/components/Hero';
+
+export const metadata: Metadata = {
+  title: 'Blog',
+  alternates: {
+    canonical: '/blog',
+  },
+};
 
 export default async function Page() {
   const data = await getList({
@@ -10,7 +17,6 @@ export default async function Page() {
   });
   return (
     <>
-      <Hero />
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} />
     </>

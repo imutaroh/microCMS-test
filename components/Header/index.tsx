@@ -5,7 +5,7 @@ import styles from './index.module.css';
 export default function Header() {
   return (
     <header className={styles.header}>
-      <Link href="/">
+      <Link href="/blog">
         <span className={styles.logoText}>{SITE_NAME}</span>
       </Link>
     </header>

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('記事一覧ページ', () => {
   test('記事一覧ページが正しく表示される', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/blog');
 
     // ページタイトルが存在することを確認
     await expect(page).toHaveTitle(/Blog/);
@@ -19,7 +19,7 @@ test.describe('記事一覧ページ', () => {
   });
 
   test('記事リンクをクリックして詳細ページに遷移できる', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/blog');
 
     // 最初の記事リンクを取得してクリック
     const firstArticleLink = page.locator('a[href*="/articles/"]').first();
@@ -33,7 +33,7 @@ test.describe('記事一覧ページ', () => {
   });
 
   test('ページネーションが表示される（記事が多い場合）', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/blog');
 
     // ページネーションが存在するかチェック（存在しない場合はスキップ）
     const pagination = page.locator('[data-testid="pagination"]').or(

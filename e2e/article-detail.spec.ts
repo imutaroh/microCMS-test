@@ -5,7 +5,7 @@ test.describe('記事詳細ページ', () => {
 
   test.beforeEach(async ({ page }) => {
     // まず記事一覧ページに行き、最初の記事のURLを取得
-    await page.goto('/');
+    await page.goto('/blog');
     const firstArticleLink = page.locator('a[href*="/articles/"]').first();
     await expect(firstArticleLink).toBeVisible();
     articleUrl = await firstArticleLink.getAttribute('href') || '/articles/test';
@@ -65,19 +65,19 @@ test.describe('記事詳細ページ', () => {
     await expect(content).toBeVisible();
   });
 
-  test('ホームページに戻るナビゲーションが機能する', async ({ page }) => {
+  test('ブログ一覧に戻るナビゲーションが機能する', async ({ page }) => {
     await page.goto(articleUrl);
 
-    // ホームページリンクまたはロゴをクリック
-    const homeLink = page.locator('a[href="/"]').or(
+    // ブログトップリンクまたはロゴをクリック
+    const homeLink = page.locator('a[href="/blog"]').or(
       page.locator('[data-testid="home-link"]')
     ).first();
-    
+
     // ホームリンクが存在する場合のみテスト
     const homeLinkCount = await homeLink.count();
     if (homeLinkCount > 0) {
       await homeLink.click();
-      await expect(page).toHaveURL('/');
+      await expect(page).toHaveURL('/blog');
     }
   });
 });
