@@ -41,6 +41,7 @@
     "typescript": "^5.8.2"
   },
   "devDependencies": {
-    "@playwright/test": "^1.54.2"
+    "@playwright/test": "^1.54.2",
+    "tsx": "^4.22.4"
   }
 }
