@@ -1,9 +1,10 @@
+import { SITE_NAME } from '@/constants';
 import styles from './index.module.css';
 
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      <p className={styles.cr}>© SIMPLE. All Rights Reserved 2023</p>
+      <p className={styles.cr}>© {SITE_NAME} 2026</p>
     </footer>
   );
 }

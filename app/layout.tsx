@@ -1,5 +1,5 @@
 import { getTagList } from '@/libs/microcms';
-import { LIMIT } from '@/constants';
+import { LIMIT, SITE_NAME, SITE_DESCRIPTION } from '@/constants';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Nav from '@/components/Nav';
@@ -9,16 +9,16 @@ import styles from './layout.module.css';
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: {
-    template: '%s | Simple Blog',
-    default: 'Simple Blog',
+    template: `%s | ${SITE_NAME}`,
+    default: SITE_NAME,
   },
-  description: 'A simple blog presented by microCMS',
+  description: SITE_DESCRIPTION,
   openGraph: {
     title: {
-      template: '%s | Simple Blog',
-      default: 'Simple Blog',
+      template: `%s | ${SITE_NAME}`,
+      default: SITE_NAME,
     },
-    description: 'A simple blog presented by microCMS',
+    description: SITE_DESCRIPTION,
     images: '/ogp.png',
   },
   alternates: {

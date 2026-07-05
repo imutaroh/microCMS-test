@@ -1,0 +1,18 @@
+.hero {
+  padding: 48px 24px;
+  margin-bottom: 24px;
+  text-align: center;
+  background-color: var(--color-bg-sub);
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.description {
+  margin-top: 12px;
+  color: var(--color-text-sub);
+  font-size: 0.95rem;
+}
