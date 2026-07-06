@@ -8,25 +8,24 @@ import styles from './page.module.css';
 const LATEST_ARTICLES_LIMIT = 3;
 
 const LOG_ENTRIES = [
-  { hash: 'e7a2f19', date: '2026-07', text: 'microCMS + Next.js でこのブログを公開' },
-  { hash: 'c41b8d3', date: '2026-06', text: 'Goでバックエンド学習を開始' },
-  { hash: 'a09c5e2', date: '2026-04', text: '新卒エンジニアとして入社' },
+  { hash: 'e7a2f19', date: '2026-07', text: 'このブログを公開' },
+  { hash: 'c41b8d3', date: '2026-06', text: 'Goの学習を開始' },
+  { hash: 'a09c5e2', date: '2026-04', text: '新卒データエンジニアとして入社' },
   { hash: '1f0d7b4', date: '2026-03', text: '大学卒業' },
 ];
 
 const STACK_ENTRIES = [
+  { name: 'SQL', status: 'daily' },
   { name: 'Go', status: 'learning' },
-  { name: 'TypeScript', status: 'daily' },
-  { name: 'Next.js', status: 'daily' },
-  { name: 'microCMS', status: 'new!' },
   { name: 'Claude Code', status: 'daily' },
 ];
 
 const PROFILE_FIELDS = [
   { key: 'name', value: 'imuta' },
-  { key: 'role', value: 'Backend Engineer' },
+  { key: 'role', value: 'Data Engineer' },
   { key: 'grade', value: '2026年卒' },
-  { key: 'focus', value: 'Go / AI-assisted dev' },
+  { key: 'base', value: '福岡' },
+  { key: 'focus', value: 'data platform / AI' },
 ];
 
 const CONTACT_LINKS = [
@@ -45,12 +44,12 @@ export default async function Page() {
     <>
       <section className={styles.hero}>
         <div className={styles.heroMain}>
-          <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imuta — backend engineer</p>
+          <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imuta — data engineer</p>
           <h1 className={`${styles.heroTitle} ${styles.heroItem2}`}>
             周りの価値を、最大化するエンジニアへ。
           </h1>
           <p className={`${styles.heroLead} ${styles.heroItem3}`}>
-            2026年新卒のバックエンドエンジニア。まだ道の途中だからこそ、GoとAIを学びながら、日々の学びをここに記録しています。
+            2026年新卒のデータエンジニア。まだ道の途中だからこそ、データ基盤とAI活用に向き合いながら、日々の学びをここに記録しています。
           </p>
           <div className={`${styles.heroCta} ${styles.heroItem4}`}>
             <Link href="/blog" className={styles.ctaPrimary}>
@@ -97,8 +96,8 @@ export default async function Page() {
         </div>
         <div className={styles.aboutBody}>
           <p>
-            普段はバックエンドを中心に、AIを活用した開発ワークフローの模索をしながら手を動かしています。
-            Claude Codeのようなエージェント型のツールをどう日々の開発に組み込むかを試行錯誤するのが好きです。
+            福岡で、D2Cのデータ基盤を作って活用しながらAIを推進していくチームで働いています。
+            Claude Codeのようなエージェント型のツールをどう日々の業務に組み込むかを試行錯誤するのが好きです。
           </p>
           <p>
             学んだことをそのままにせず記録して公開するのは、後から自分で見返せるようにするためと、
