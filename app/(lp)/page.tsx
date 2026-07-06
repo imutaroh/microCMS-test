@@ -47,10 +47,10 @@ export default async function Page() {
         <div className={styles.heroMain}>
           <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imuta — backend engineer</p>
           <h1 className={`${styles.heroTitle} ${styles.heroItem2}`}>
-            作って、つまずいて、記録する。
+            周りの価値を、最大化するエンジニアへ。
           </h1>
           <p className={`${styles.heroLead} ${styles.heroItem3}`}>
-            2026年新卒のバックエンドエンジニア。Goを学びながら、日々の学びと失敗をこのサイトに記録しています。
+            2026年新卒のバックエンドエンジニア。まだ道の途中だからこそ、GoとAIを学びながら、日々の学びをここに記録しています。
           </p>
           <div className={`${styles.heroCta} ${styles.heroItem4}`}>
             <Link href="/blog" className={styles.ctaPrimary}>
