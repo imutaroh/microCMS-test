@@ -21,7 +21,7 @@ const STACK_ENTRIES = [
 ];
 
 const PROFILE_FIELDS = [
-  { key: 'name', value: 'imuta' },
+  { key: 'name', value: 'imutaro' },
   { key: 'role', value: 'Data Engineer' },
   { key: 'grade', value: '2026年卒' },
   { key: 'base', value: '福岡' },
@@ -44,7 +44,7 @@ export default async function Page() {
     <>
       <section className={styles.hero}>
         <div className={styles.heroMain}>
-          <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imuta — data engineer</p>
+          <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imutaro — data engineer</p>
           <h1 className={`${styles.heroTitle} ${styles.heroItem2}`}>
             周りの価値を、最大化するエンジニアへ。
           </h1>
