@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getList } from '@/libs/microcms';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
+import LearningLog from './LearningLog';
 import styles from './page.module.css';
 
 const LATEST_ARTICLES_LIMIT = 3;
@@ -21,6 +22,20 @@ const STACK_ENTRIES = [
   { name: 'Claude Code', status: 'daily' },
 ];
 
+const PROFILE_FIELDS = [
+  { key: 'name', value: 'imuta' },
+  { key: 'role', value: 'Backend Engineer' },
+  { key: 'grade', value: '2026年卒' },
+  { key: 'focus', value: 'Go / AI-assisted dev' },
+];
+
+const CONTACT_LINKS = [
+  { label: 'GitHub', href: 'https://github.com/imutaroh', external: true },
+  // TODO: X(旧Twitter)アカウント開設後に差し替える
+  { label: 'X', href: 'https://x.com/', external: true },
+  { label: 'Email', href: 'mailto:contact@example.com', external: false },
+];
+
 export default async function Page() {
   const data = await getList({
     limit: LATEST_ARTICLES_LIMIT,
@@ -29,60 +44,82 @@ export default async function Page() {
   return (
     <>
       <section className={styles.hero}>
-        <p className={styles.eyebrow}>imuta — backend engineer</p>
-        <h1 className={styles.heroTitle}>作って、つまずいて、記録する。</h1>
-        <p className={styles.heroLead}>
-          2026年新卒のバックエンドエンジニア。Goを学びながら、日々の学びと失敗をこのサイトに記録しています。
-        </p>
-        <div className={styles.heroCta}>
-          <Link href="/blog" className={styles.ctaPrimary}>
-            ブログを読む →
-          </Link>
-          <a
-            href="https://github.com/imutaroh"
-            className={styles.ctaSecondary}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub →
-          </a>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.about}>
-          <h2 className={styles.sectionTitle}>About</h2>
-          <div className={styles.aboutBody}>
-            <p>
-              普段はバックエンドを中心に、AIを活用した開発ワークフローの模索をしながら手を動かしています。
-              Claude Codeのようなエージェント型のツールをどう日々の開発に組み込むかを試行錯誤するのが好きです。
-            </p>
-            <p>
-              学んだことをそのままにせず記録して公開するのは、後から自分で見返せるようにするためと、
-              同じところでつまずいている誰かの役に立てばという理由からです。
-            </p>
+        <div className={styles.heroMain}>
+          <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imuta — backend engineer</p>
+          <h1 className={`${styles.heroTitle} ${styles.heroItem2}`}>
+            作って、つまずいて、記録する。
+          </h1>
+          <p className={`${styles.heroLead} ${styles.heroItem3}`}>
+            2026年新卒のバックエンドエンジニア。Goを学びながら、日々の学びと失敗をこのサイトに記録しています。
+          </p>
+          <div className={`${styles.heroCta} ${styles.heroItem4}`}>
+            <Link href="/blog" className={styles.ctaPrimary}>
+              ブログを読む
+              <span className={styles.ctaArrow} aria-hidden="true">
+                →
+              </span>
+            </Link>
+            <a
+              href="https://github.com/imutaroh"
+              className={styles.ctaSecondary}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+              <span className={styles.ctaArrow} aria-hidden="true">
+                →
+              </span>
+            </a>
           </div>
         </div>
+
+        <div className={`${styles.heroCard} ${styles.heroItem5}`} aria-hidden="true">
+          <div className={styles.cardTab}>
+            <span className={styles.cardDot} />
+            profile.json
+          </div>
+          <dl className={styles.cardBody}>
+            {PROFILE_FIELDS.map((field) => (
+              <div className={styles.cardRow} key={field.key}>
+                <dt className={styles.cardKey}>{field.key}</dt>
+                <dd className={styles.cardValue}>{field.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className={styles.cardFooter}>github.com/imutaroh</div>
+        </div>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          Learning Log <span className={styles.sectionSubtitle}>学習の記録</span>
-        </h2>
-        <ol className={styles.log}>
-          {LOG_ENTRIES.map((entry) => (
-            <li className={styles.logEntry} key={entry.hash}>
-              <span className={styles.logDot} aria-hidden="true" />
-              <span className={styles.logHash}>{entry.hash}</span>
-              <span className={styles.logDate}>{entry.date}</span>
-              <span className={styles.logText}>{entry.text}</span>
-            </li>
-          ))}
-        </ol>
+        <div className={styles.sectionHead}>
+          <p className={styles.sectionEyebrow}>01 / about</p>
+          <h2 className={styles.sectionTitle}>About</h2>
+        </div>
+        <div className={styles.aboutBody}>
+          <p>
+            普段はバックエンドを中心に、AIを活用した開発ワークフローの模索をしながら手を動かしています。
+            Claude Codeのようなエージェント型のツールをどう日々の開発に組み込むかを試行錯誤するのが好きです。
+          </p>
+          <p>
+            学んだことをそのままにせず記録して公開するのは、後から自分で見返せるようにするためと、
+            同じところでつまずいている誰かの役に立てばという理由からです。
+          </p>
+        </div>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Stack</h2>
+        <div className={styles.sectionHead}>
+          <p className={styles.sectionEyebrow}>02 / log</p>
+          <h2 className={styles.sectionTitle}>Learning Log</h2>
+        </div>
+        <LearningLog entries={LOG_ENTRIES} />
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <p className={styles.sectionEyebrow}>03 / stack</p>
+          <h2 className={styles.sectionTitle}>Stack</h2>
+        </div>
         <ul className={styles.stack}>
           {STACK_ENTRIES.map((item) => (
             <li className={styles.stackRow} key={item.name}>
@@ -94,7 +131,10 @@ export default async function Page() {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>最新の記事</h2>
+        <div className={styles.sectionHead}>
+          <p className={styles.sectionEyebrow}>04 / articles</p>
+          <h2 className={styles.sectionTitle}>最新の記事</h2>
+        </div>
         <ul className={styles.articles}>
           {data.contents.map((article) => (
             <li className={styles.articleRow} key={article.id}>
@@ -109,8 +149,32 @@ export default async function Page() {
           ))}
         </ul>
         <Link href="/blog" className={styles.articlesMore}>
-          すべての記事 →
+          すべての記事
+          <span className={styles.ctaArrow} aria-hidden="true">
+            →
+          </span>
         </Link>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <p className={styles.sectionEyebrow}>05 / contact</p>
+          <h2 className={styles.sectionTitle}>Contact</h2>
+        </div>
+        <ul className={styles.contact}>
+          {CONTACT_LINKS.map((link) => (
+            <li className={styles.contactRow} key={link.label}>
+              <a
+                href={link.href}
+                className={styles.contactLink}
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                <span className={styles.contactLabel}>{link.label}</span>
+                <span className={styles.contactValue}>{link.href.replace(/^mailto:/, '')}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   );
