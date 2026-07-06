@@ -3,6 +3,7 @@ import { getList } from '@/libs/microcms';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
 import LearningLog from './LearningLog';
+import PipelineBackground from './PipelineBackground';
 import styles from './page.module.css';
 
 const LATEST_ARTICLES_LIMIT = 3;
@@ -43,6 +44,7 @@ export default async function Page() {
   return (
     <>
       <section className={styles.hero}>
+        <PipelineBackground />
         <div className={styles.heroMain}>
           <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imutaro — data engineer</p>
           <h1 className={`${styles.heroTitle} ${styles.heroItem2}`}>
