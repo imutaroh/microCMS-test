@@ -131,8 +131,23 @@
 }
 
 @media (max-width: 768px) {
+  /* モバイルでは縮小した計器盤を右上コーナーに寄せ、弧が覗く見せ方にする。
+     1200x600px 固定(スケール1.2)で、ダイヤル中心(vb 713)は画面右上のやや外 */
   .svg {
-    display: none;
+    width: 1200px;
+    height: 600px;
+    left: auto;
+    right: -400px;
+    top: -140px;
+    transform: none;
+    opacity: 0.6;
+    mask-image: radial-gradient(circle 480px at 71.3% 50%, #000 0%, #000 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(
+      circle 480px at 71.3% 50%,
+      #000 0%,
+      #000 40%,
+      transparent 100%
+    );
   }
 
   .wash {

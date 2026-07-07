@@ -20,6 +20,16 @@ export default function LearningLog({ entries }: Props) {
     const items = listRef.current?.querySelectorAll(`.${styles.logEntry}`);
     if (!items || items.length === 0) return;
 
+    const revealAll = () => {
+      items.forEach((item) => item.classList.add(styles.logEntryVisible));
+    };
+
+    // IntersectionObserver が使えない環境では即時表示にフォールバック
+    if (typeof IntersectionObserver === 'undefined') {
+      revealAll();
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (observedEntries) => {
         observedEntries.forEach((observedEntry) => {
@@ -33,7 +43,14 @@ export default function LearningLog({ entries }: Props) {
     );
 
     items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
+
+    // 何らかの理由で observer が発火しなくても、内容が見えないままにはしない保険
+    const fallbackTimer = window.setTimeout(revealAll, 2500);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(fallbackTimer);
+    };
   }, []);
 
   return (

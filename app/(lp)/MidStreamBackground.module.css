@@ -73,7 +73,8 @@
 }
 
 @media (max-width: 768px) {
+  /* モバイルでも流線は見せる。コンテンツ幅いっぱいに文字が乗るぶん、全体をさらに淡く */
   .svg {
-    display: none;
+    opacity: 0.7;
   }
 }
