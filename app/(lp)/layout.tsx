@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SITE_NAME } from '@/constants';
+import FluidCursor from '@/components/FluidCursor';
 import styles from './layout.module.css';
 
 type Props = {
@@ -28,6 +29,7 @@ export default function LpLayout({ children }: Props) {
         </nav>
       </header>
       <main>{children}</main>
+      <FluidCursor />
     </>
   );
 }
