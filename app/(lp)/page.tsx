@@ -4,6 +4,7 @@ import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
 import LearningLog from './LearningLog';
 import HeroBackground from './HeroBackground';
+import MidStreamBackground from './MidStreamBackground';
 import styles from './page.module.css';
 
 const LATEST_ARTICLES_LIMIT = 3;
@@ -110,30 +111,34 @@ export default async function Page() {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.sectionHead}>
-          <p className={styles.sectionEyebrow}>02 / log</p>
-          <h2 className={styles.sectionTitle}>Learning Log</h2>
-        </div>
-        <LearningLog entries={LOG_ENTRIES} />
-      </section>
+      <div className={styles.midBand}>
+        <MidStreamBackground />
 
-      <section className={styles.section}>
-        <div className={styles.sectionHead}>
-          <p className={styles.sectionEyebrow}>03 / stack</p>
-          <h2 className={styles.sectionTitle}>Stack</h2>
-        </div>
-        <ul className={styles.stack}>
-          {STACK_ENTRIES.map((item) => (
-            <li className={styles.stackRow} key={item.name}>
-              <span className={styles.stackName}>{item.name}</span>
-              <span className={styles.stackStatus} data-status={item.status}>
-                {item.status}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
+        <section className={styles.section}>
+          <div className={styles.sectionHead}>
+            <p className={styles.sectionEyebrow}>02 / log</p>
+            <h2 className={styles.sectionTitle}>Learning Log</h2>
+          </div>
+          <LearningLog entries={LOG_ENTRIES} />
+        </section>
+
+        <section className={styles.section}>
+          <div className={styles.sectionHead}>
+            <p className={styles.sectionEyebrow}>03 / stack</p>
+            <h2 className={styles.sectionTitle}>Stack</h2>
+          </div>
+          <ul className={styles.stack}>
+            {STACK_ENTRIES.map((item) => (
+              <li className={styles.stackRow} key={item.name}>
+                <span className={styles.stackName}>{item.name}</span>
+                <span className={styles.stackStatus} data-status={item.status}>
+                  {item.status}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
 
       <section className={styles.section}>
         <div className={styles.sectionHead}>
@@ -166,7 +171,7 @@ export default async function Page() {
         </Link>
       </section>
 
-      <section className={styles.section}>
+      <section className={`${styles.section} ${styles.sectionEnd}`}>
         <div className={styles.sectionHead}>
           <p className={styles.sectionEyebrow}>05 / contact</p>
           <h2 className={styles.sectionTitle}>Contact</h2>

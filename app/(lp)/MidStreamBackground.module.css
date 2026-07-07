@@ -1,0 +1,79 @@
+.wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* コンテンツが乗る中央では静かに、左右の余白では素の濃さで見せる。
+     上下端もフェードさせて帯の境界を切らない */
+  mask-image:
+    linear-gradient(
+      to right,
+      #000 0%,
+      rgba(0, 0, 0, 0.3) 28%,
+      rgba(0, 0, 0, 0.3) 72%,
+      #000 100%
+    ),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      #000 0%,
+      rgba(0, 0, 0, 0.3) 28%,
+      rgba(0, 0, 0, 0.3) 72%,
+      #000 100%
+    ),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+.lineBase {
+  fill: none;
+  stroke: var(--color-border-dark);
+  stroke-width: 1;
+  stroke-opacity: 0.45;
+  vector-effect: non-scaling-stroke;
+}
+
+/* 流線の上を走る光条 */
+.lineFlow {
+  fill: none;
+  stroke: var(--color-accent-bright);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 90 1010;
+  opacity: 0.5;
+  vector-effect: non-scaling-stroke;
+  animation: streamFlow 16s linear infinite;
+}
+
+@keyframes streamFlow {
+  from {
+    stroke-dashoffset: 1100;
+  }
+  to {
+    stroke-dashoffset: -1100;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineFlow {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.2;
+  }
+}
+
+@media (max-width: 768px) {
+  .svg {
+    display: none;
+  }
+}

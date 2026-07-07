@@ -222,19 +222,29 @@
   color: var(--color-sub);
 }
 
+/* Learning Log〜Stack を包む全幅のストリーム帯。中のセクションを前面に出す */
+.midBand {
+  position: relative;
+}
+
+.midBand .section {
+  position: relative;
+  z-index: 1;
+}
+
 .section {
   max-width: 1040px;
   margin: 0 auto;
   padding: 96px 24px 0;
 }
 
-.section:last-child {
+.sectionEnd {
   position: relative;
   padding-bottom: 96px;
 }
 
 /* ページの結びにヒーローの同心円を淡く反響させるブックエンド */
-.section:last-child::after {
+.sectionEnd::after {
   content: '';
   position: absolute;
   z-index: -1;
@@ -255,33 +265,6 @@
 
 .sectionHead {
   margin-bottom: 40px;
-}
-
-/* ヒーローの計器盤の目盛りを引き継いだ定規ライン。
-   1px の基線 + 24px 刻みの短針 + 120px 刻みの長針の3層 */
-.sectionHead::after {
-  content: '';
-  display: block;
-  margin-top: 20px;
-  height: 10px;
-  background-image:
-    linear-gradient(var(--color-line), var(--color-line)),
-    repeating-linear-gradient(
-      to right,
-      var(--color-border-dark) 0 1px,
-      transparent 1px 24px
-    ),
-    repeating-linear-gradient(to right, var(--color-sub) 0 1px, transparent 1px 120px);
-  background-size:
-    100% 1px,
-    100% 5px,
-    100% 10px;
-  background-position:
-    left bottom,
-    left bottom,
-    left bottom;
-  background-repeat: no-repeat;
-  opacity: 0.5;
 }
 
 .sectionEyebrow {
@@ -594,7 +577,7 @@
     padding: 64px 24px 0;
   }
 
-  .section:last-child {
+  .sectionEnd {
     padding-bottom: 64px;
   }
 
