@@ -9,13 +9,18 @@
   }
 }
 
+.heroOuter {
+  position: relative;
+  overflow: hidden;
+}
+
 .hero {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 64px;
-  max-width: 1120px;
+  max-width: 1200px;
   min-height: 70vh;
   margin: 0 auto;
   padding: 48px 24px;
@@ -68,7 +73,7 @@
 .heroTitle {
   /* keep-all で「最大化するエンジニアへ。」(12文字)が1行の最小単位になるため、
      テキストカラム幅(全体 - カード300px - gap)に12文字が収まる係数にする */
-  font-size: clamp(2.25rem, 4.2vw, 4rem);
+  font-size: clamp(1.7rem, 4.2vw, 4rem);
   line-height: 1.2;
   font-weight: 700;
   color: var(--color-ink);
@@ -218,25 +223,87 @@
 }
 
 .section {
-  max-width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
   padding: 96px 24px 0;
 }
 
 .section:last-child {
+  position: relative;
   padding-bottom: 96px;
+}
+
+/* ページの結びにヒーローの同心円を淡く反響させるブックエンド */
+.section:last-child::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -180px;
+  bottom: -180px;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    rgba(91, 101, 114, 0.22) 0 1px,
+    transparent 1px 52px
+  );
+  mask-image: radial-gradient(circle at center, #000 30%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle at center, #000 30%, transparent 72%);
+  pointer-events: none;
 }
 
 .sectionHead {
   margin-bottom: 40px;
 }
 
+/* ヒーローの計器盤の目盛りを引き継いだ定規ライン。
+   1px の基線 + 24px 刻みの短針 + 120px 刻みの長針の3層 */
+.sectionHead::after {
+  content: '';
+  display: block;
+  margin-top: 20px;
+  height: 10px;
+  background-image:
+    linear-gradient(var(--color-line), var(--color-line)),
+    repeating-linear-gradient(
+      to right,
+      var(--color-border-dark) 0 1px,
+      transparent 1px 24px
+    ),
+    repeating-linear-gradient(to right, var(--color-sub) 0 1px, transparent 1px 120px);
+  background-size:
+    100% 1px,
+    100% 5px,
+    100% 10px;
+  background-position:
+    left bottom,
+    left bottom,
+    left bottom;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+}
+
 .sectionEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--color-accent);
   letter-spacing: 0.02em;
   margin-bottom: 8px;
+}
+
+/* ヒーローのリングを引き継いだミニダイヤル(輪+中心点) */
+.sectionEyebrow::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--color-accent);
+  background: radial-gradient(circle, var(--color-accent) 0 2px, transparent 2.5px);
+  opacity: 0.8;
 }
 
 .sectionTitle {
@@ -257,7 +324,8 @@
 .log {
   position: relative;
   padding-left: 28px;
-  border-left: 1px solid var(--color-line);
+  /* ヒーローの破線リングと同じ言語の破線タイムライン */
+  border-left: 1px dashed var(--color-border-dark);
 }
 
 .logEntry {
@@ -288,6 +356,10 @@
   height: 8px;
   border-radius: 50%;
   background-color: var(--color-accent);
+  /* ヒーローのノードと同じ「点+リング」 */
+  box-shadow:
+    0 0 0 3px var(--color-bg),
+    0 0 0 4px rgba(0, 135, 168, 0.35);
 }
 
 .logHash {
@@ -334,9 +406,48 @@
 }
 
 .stackStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--color-sub);
+}
+
+.stackStatus::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* daily = 点灯、learning = 輪が脈動(進行中) */
+.stackStatus[data-status='daily']::before {
+  background-color: var(--color-accent);
+}
+
+.stackStatus[data-status='learning']::before {
+  border: 1px solid var(--color-accent);
+  animation: statusPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 173, 216, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(0, 173, 216, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stackStatus[data-status='learning']::before {
+    animation: none;
+  }
 }
 
 .articles {
@@ -363,6 +474,26 @@
 }
 
 .articleLink:hover .articleTitle {
+  color: var(--color-accent);
+}
+
+.articleTitleGroup {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  min-width: 0;
+}
+
+.articleIndex {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-sub);
+  opacity: 0.7;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.articleLink:hover .articleIndex {
   color: var(--color-accent);
 }
 

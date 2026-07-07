@@ -3,7 +3,7 @@ import { getList } from '@/libs/microcms';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
 import LearningLog from './LearningLog';
-import PipelineBackground from './PipelineBackground';
+import HeroBackground from './HeroBackground';
 import styles from './page.module.css';
 
 const LATEST_ARTICLES_LIMIT = 3;
@@ -43,51 +43,53 @@ export default async function Page() {
 
   return (
     <>
-      <section className={styles.hero}>
-        <PipelineBackground />
-        <div className={styles.heroMain}>
-          <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imutaro — data engineer</p>
-          <h1 className={`${styles.heroTitle} ${styles.heroItem2}`}>
-            周りの価値を、最大化するエンジニアへ。
-          </h1>
-          <p className={`${styles.heroLead} ${styles.heroItem3}`}>
-            2026年新卒のデータエンジニア。まだ道の途中だからこそ、データ基盤とAI活用に向き合いながら、日々の学びをここに記録しています。
-          </p>
-          <div className={`${styles.heroCta} ${styles.heroItem4}`}>
-            <Link href="/blog" className={styles.ctaPrimary}>
-              ブログを読む
-              <span className={styles.ctaArrow} aria-hidden="true">
-                →
-              </span>
-            </Link>
-            <a
-              href="https://github.com/imutaroh"
-              className={styles.ctaSecondary}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-              <span className={styles.ctaArrow} aria-hidden="true">
-                →
-              </span>
-            </a>
+      <section className={styles.heroOuter}>
+        <HeroBackground />
+        <div className={styles.hero}>
+          <div className={styles.heroMain}>
+            <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imutaro — data engineer</p>
+            <h1 className={`${styles.heroTitle} ${styles.heroItem2}`}>
+              周りの価値を、最大化するエンジニアへ。
+            </h1>
+            <p className={`${styles.heroLead} ${styles.heroItem3}`}>
+              2026年新卒のデータエンジニア。まだ道の途中だからこそ、データ基盤とAI活用に向き合いながら、日々の学びをここに記録しています。
+            </p>
+            <div className={`${styles.heroCta} ${styles.heroItem4}`}>
+              <Link href="/blog" className={styles.ctaPrimary}>
+                ブログを読む
+                <span className={styles.ctaArrow} aria-hidden="true">
+                  →
+                </span>
+              </Link>
+              <a
+                href="https://github.com/imutaroh"
+                className={styles.ctaSecondary}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+                <span className={styles.ctaArrow} aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div className={`${styles.heroCard} ${styles.heroItem5}`} aria-hidden="true">
-          <div className={styles.cardTab}>
-            <span className={styles.cardDot} />
-            profile.json
+          <div className={`${styles.heroCard} ${styles.heroItem5}`} aria-hidden="true">
+            <div className={styles.cardTab}>
+              <span className={styles.cardDot} />
+              profile.json
+            </div>
+            <dl className={styles.cardBody}>
+              {PROFILE_FIELDS.map((field) => (
+                <div className={styles.cardRow} key={field.key}>
+                  <dt className={styles.cardKey}>{field.key}</dt>
+                  <dd className={styles.cardValue}>{field.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className={styles.cardFooter}>github.com/imutaroh</div>
           </div>
-          <dl className={styles.cardBody}>
-            {PROFILE_FIELDS.map((field) => (
-              <div className={styles.cardRow} key={field.key}>
-                <dt className={styles.cardKey}>{field.key}</dt>
-                <dd className={styles.cardValue}>{field.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <div className={styles.cardFooter}>github.com/imutaroh</div>
         </div>
       </section>
 
@@ -98,8 +100,8 @@ export default async function Page() {
         </div>
         <div className={styles.aboutBody}>
           <p>
-            福岡で、D2Cのデータ基盤を作って活用しながらAIを推進していくチームで働いています。
-            Claude Codeのようなエージェント型のツールをどう日々の業務に組み込むかを試行錯誤するのが好きです。
+            福岡で、D2Cのデータ基盤を作って活用しながらAIを推進していくチームで働いています。 Claude
+            Codeのようなエージェント型のツールをどう日々の業務に組み込むかを試行錯誤するのが好きです。
           </p>
           <p>
             学んだことをそのままにせず記録して公開するのは、後から自分で見返せるようにするためと、
@@ -125,7 +127,9 @@ export default async function Page() {
           {STACK_ENTRIES.map((item) => (
             <li className={styles.stackRow} key={item.name}>
               <span className={styles.stackName}>{item.name}</span>
-              <span className={styles.stackStatus}>{item.status}</span>
+              <span className={styles.stackStatus} data-status={item.status}>
+                {item.status}
+              </span>
             </li>
           ))}
         </ul>
@@ -137,10 +141,15 @@ export default async function Page() {
           <h2 className={styles.sectionTitle}>最新の記事</h2>
         </div>
         <ul className={styles.articles}>
-          {data.contents.map((article) => (
+          {data.contents.map((article, index) => (
             <li className={styles.articleRow} key={article.id}>
               <Link href={`/articles/${article.id}`} className={styles.articleLink}>
-                <span className={styles.articleTitle}>{article.title}</span>
+                <span className={styles.articleTitleGroup}>
+                  <span className={styles.articleIndex}>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className={styles.articleTitle}>{article.title}</span>
+                </span>
                 <span className={styles.articleMeta}>
                   <PublishedDate date={article.publishedAt || article.createdAt} />
                   <TagList tags={article.tags} hasLink={false} />
