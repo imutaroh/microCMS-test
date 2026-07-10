@@ -1,3 +1,10 @@
+/* Tailwind v4: theme と utilities のみ読み込み、preflight(base)は入れない。
+   既存の CSS Modules 設計(ブログ/記事)を壊さないための共存構成。
+   React Bits はユーティリティ + 各コンポーネント自前CSSで動くので preflight は不要。 */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
 :root {
   /* --- design tokens --- */
   --color-bg: #fafbfc;
