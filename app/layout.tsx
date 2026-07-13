@@ -1,9 +1,10 @@
-import { Space_Grotesk, Zen_Kaku_Gothic_New, IBM_Plex_Mono } from 'next/font/google';
+import { Zen_Old_Mincho, Zen_Kaku_Gothic_New, IBM_Plex_Mono } from 'next/font/google';
 import { SITE_NAME, SITE_DESCRIPTION } from '@/constants';
 import Footer from '@/components/Footer';
 import './globals.css';
 
-const display = Space_Grotesk({
+const display = Zen_Old_Mincho({
+  weight: ['400', '700', '900'],
   subsets: ['latin'],
   variable: '--font-display',
 });

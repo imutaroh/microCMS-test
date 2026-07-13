@@ -1,0 +1,76 @@
+.wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 大円の内側に落ちる白いハイライト(柔らかい立体感) */
+.washLeft {
+  position: absolute;
+  left: -320px;
+  bottom: -420px;
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.9) 0%, transparent 65%);
+}
+
+.washRight {
+  position: absolute;
+  right: -280px;
+  top: -360px;
+  width: 880px;
+  height: 880px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.85) 0%, transparent 65%);
+}
+
+/* 見出し右に添える小さなドットパッチ */
+.dots {
+  position: absolute;
+  left: min(30%, 430px);
+  top: 96px;
+  width: 96px;
+  height: 44px;
+  background-image: radial-gradient(circle, #b9c4d2 1.5px, transparent 1.5px);
+  background-size: 13px 13px;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.circle {
+  fill: none;
+  stroke: rgba(148, 163, 184, 0.28);
+  stroke-width: 1;
+}
+
+.arcLine {
+  fill: none;
+  stroke: rgba(148, 163, 184, 0.4);
+  stroke-width: 1;
+}
+
+.nodeGlow {
+  fill: rgba(59, 130, 246, 0.25);
+}
+
+.nodeCore {
+  fill: var(--color-accent);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+@media (max-width: 900px) {
+  .dots {
+    left: auto;
+    right: 24px;
+    top: 48px;
+  }
+}

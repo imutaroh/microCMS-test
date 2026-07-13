@@ -11,7 +11,7 @@ type Props = {
 
 export default function LpLayout({ children }: Props) {
   return (
-    <ClickSpark sparkColor="#0087a8" sparkSize={9} sparkRadius={16} sparkCount={8}>
+    <ClickSpark sparkColor="#2563eb" sparkSize={9} sparkRadius={16} sparkCount={8}>
       <header className={styles.header}>
         <Link href="/" className={styles.logo}>
           {SITE_NAME}

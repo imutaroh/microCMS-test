@@ -27,7 +27,7 @@ export default function Icon() {
             width: 20,
             height: 20,
             borderRadius: '50%',
-            border: '2px solid #0087a8',
+            border: '2px solid #2563eb',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -38,7 +38,7 @@ export default function Icon() {
               width: 7,
               height: 7,
               borderRadius: '50%',
-              background: '#00add8',
+              background: '#3b82f6',
               display: 'flex',
             }}
           />
