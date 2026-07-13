@@ -537,6 +537,9 @@
 }
 
 .contactLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--color-ink);
   font-weight: 500;
   transition: color 0.15s ease;

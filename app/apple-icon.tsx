@@ -1,13 +1,13 @@
 import { ImageResponse } from 'next/og';
 
 export const size = {
-  width: 32,
-  height: 32,
+  width: 180,
+  height: 180,
 };
 export const contentType = 'image/png';
 
-// サイトの署名モチーフ「ミニダイヤル(輪+中心点)」を白×青で描く
-export default function Icon() {
+// ホーム画面用: ミニダイヤルの大判(白×青)。角丸はOS側で付くので付けない
+export default function AppleIcon() {
   return new ImageResponse(
     (
       <div
@@ -18,16 +18,14 @@ export default function Icon() {
           alignItems: 'center',
           justifyContent: 'center',
           background: '#fafbfc',
-          border: '1px solid #e3e8ed',
-          borderRadius: 7,
         }}
       >
         <div
           style={{
-            width: 20,
-            height: 20,
+            width: 104,
+            height: 104,
             borderRadius: '50%',
-            border: '2px solid #0087a8',
+            border: '10px solid #0087a8',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -35,8 +33,8 @@ export default function Icon() {
         >
           <div
             style={{
-              width: 7,
-              height: 7,
+              width: 36,
+              height: 36,
               borderRadius: '50%',
               background: '#00add8',
               display: 'flex',

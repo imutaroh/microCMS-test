@@ -5,6 +5,7 @@ import TagList from '@/components/TagList';
 import DotGrid from '@/components/DotGrid';
 import SplitText from '@/components/SplitText';
 import ShinyText from '@/components/ShinyText';
+import BrandIcon from '@/components/BrandIcon';
 import LearningLog from './LearningLog';
 import MidStreamBackground from './MidStreamBackground';
 import styles from './page.module.css';
@@ -33,13 +34,12 @@ const PROFILE_FIELDS = [
 ];
 
 const CONTACT_LINKS = [
-  { label: 'GitHub', href: 'https://github.com/imutaroh', external: true },
-  { label: 'Zenn', href: 'https://zenn.dev/imutaroh', external: true },
-  { label: 'note', href: 'https://note.com/imutaroh', external: true },
-  // TODO: X(旧Twitter)アカウント開設後に差し替える
-  { label: 'X', href: 'https://x.com/', external: true },
-  { label: 'Email', href: 'mailto:contact@example.com', external: false },
-];
+  { label: 'GitHub', icon: 'github', href: 'https://github.com/imutaroh', external: true },
+  { label: 'Zenn', icon: 'zenn', href: 'https://zenn.dev/imutaroh', external: true },
+  { label: 'note', icon: 'note', href: 'https://note.com/imutaroh', external: true },
+  { label: 'X', icon: 'x', href: 'https://x.com/imutaroh', external: true },
+  { label: 'Email', icon: null, href: 'mailto:contact@example.com', external: false },
+] as const;
 
 export default async function Page() {
   const data = await getList({
@@ -91,10 +91,8 @@ export default async function Page() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <BrandIcon name="github" />
                 GitHub
-                <span className={styles.ctaArrow} aria-hidden="true">
-                  →
-                </span>
               </a>
               <a
                 href="https://zenn.dev/imutaroh"
@@ -102,10 +100,8 @@ export default async function Page() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <BrandIcon name="zenn" />
                 Zenn
-                <span className={styles.ctaArrow} aria-hidden="true">
-                  →
-                </span>
               </a>
               <a
                 href="https://note.com/imutaroh"
@@ -113,10 +109,17 @@ export default async function Page() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <BrandIcon name="note" />
                 note
-                <span className={styles.ctaArrow} aria-hidden="true">
-                  →
-                </span>
+              </a>
+              <a
+                href="https://x.com/imutaroh"
+                className={styles.ctaSecondary}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <BrandIcon name="x" />
+                X
               </a>
             </div>
           </div>
@@ -229,7 +232,10 @@ export default async function Page() {
                 className={styles.contactLink}
                 {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
-                <span className={styles.contactLabel}>{link.label}</span>
+                <span className={styles.contactLabel}>
+                  {link.icon && <BrandIcon name={link.icon} />}
+                  {link.label}
+                </span>
                 <span className={styles.contactValue}>{link.href.replace(/^mailto:/, '')}</span>
               </a>
             </li>

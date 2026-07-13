@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { SITE_NAME } from '@/constants';
 import FluidCursor from '@/components/FluidCursor';
 import ClickSpark from '@/components/ClickSpark';
+import BrandIcon from '@/components/BrandIcon';
 import styles from './layout.module.css';
 
 type Props = {
@@ -25,6 +26,7 @@ export default function LpLayout({ children }: Props) {
             target="_blank"
             rel="noopener noreferrer"
           >
+            <BrandIcon name="zenn" size={14} />
             Zenn
           </a>
           <a
@@ -33,7 +35,17 @@ export default function LpLayout({ children }: Props) {
             target="_blank"
             rel="noopener noreferrer"
           >
+            <BrandIcon name="note" size={14} />
             note
+          </a>
+          <a
+            href="https://x.com/imutaroh"
+            className={styles.navLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BrandIcon name="x" size={14} />
+            X
           </a>
           <a
             href="https://github.com/imutaroh"
@@ -41,6 +53,7 @@ export default function LpLayout({ children }: Props) {
             target="_blank"
             rel="noopener noreferrer"
           >
+            <BrandIcon name="github" size={14} />
             GitHub
           </a>
         </nav>
