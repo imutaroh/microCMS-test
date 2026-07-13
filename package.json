@@ -39,7 +39,7 @@
     "microcms-js-sdk": "^3.4.0",
     "motion": "^12.42.2",
     "next": "^15.5.18",
-    "prettier": "^3.5.3",
+    "prettier": "^3.9.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tailwindcss": "^4.3.2",
