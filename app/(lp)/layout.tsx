@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { SITE_NAME } from '@/constants';
 import FluidCursor from '@/components/FluidCursor';
+import ClickSpark from '@/components/ClickSpark';
 import styles from './layout.module.css';
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
 
 export default function LpLayout({ children }: Props) {
   return (
-    <>
+    <ClickSpark sparkColor="#0087a8" sparkSize={9} sparkRadius={16} sparkCount={8}>
       <header className={styles.header}>
         <Link href="/" className={styles.logo}>
           {SITE_NAME}
@@ -30,6 +31,6 @@ export default function LpLayout({ children }: Props) {
       </header>
       <main>{children}</main>
       <FluidCursor />
-    </>
+    </ClickSpark>
   );
 }

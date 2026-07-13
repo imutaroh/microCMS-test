@@ -1,3 +1,4 @@
+'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -20,6 +21,7 @@ export interface SplitTextProps {
   tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
   textAlign?: React.CSSProperties['textAlign'];
   onLetterAnimationComplete?: () => void;
+  smartWrap?: boolean;
 }
 
 const SplitText: React.FC<SplitTextProps> = ({
@@ -35,7 +37,8 @@ const SplitText: React.FC<SplitTextProps> = ({
   rootMargin = '-100px',
   tag = 'p',
   textAlign = 'center',
-  onLetterAnimationComplete
+  onLetterAnimationComplete,
+  smartWrap = true
 }) => {
   const ref = useRef<HTMLParagraphElement>(null);
   const animationCompletedRef = useRef(false);
@@ -94,7 +97,7 @@ const SplitText: React.FC<SplitTextProps> = ({
       };
       const splitInstance = new GSAPSplitText(el, {
         type: splitType,
-        smartWrap: true,
+        smartWrap,
         autoSplit: splitType === 'lines',
         linesClass: 'split-line',
         wordsClass: 'split-word',
@@ -149,7 +152,8 @@ const SplitText: React.FC<SplitTextProps> = ({
         JSON.stringify(to),
         threshold,
         rootMargin,
-        fontsLoaded
+        fontsLoaded,
+        smartWrap
       ],
       scope: ref
     }

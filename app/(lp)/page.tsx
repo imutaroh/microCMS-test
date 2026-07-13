@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { getList } from '@/libs/microcms';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
+import DotGrid from '@/components/DotGrid';
+import SplitText from '@/components/SplitText';
+import ShinyText from '@/components/ShinyText';
 import LearningLog from './LearningLog';
-import HeroBackground from './HeroBackground';
 import MidStreamBackground from './MidStreamBackground';
 import styles from './page.module.css';
 
@@ -45,13 +47,32 @@ export default async function Page() {
   return (
     <>
       <section className={styles.heroOuter}>
-        <HeroBackground />
+        <DotGrid
+          baseColor="#d5dde3"
+          activeColor="#00add8"
+          dotSize={4}
+          gap={28}
+          proximity={110}
+          shockRadius={200}
+          shockStrength={4}
+          style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', padding: 0 }}
+        />
         <div className={styles.hero}>
           <div className={styles.heroMain}>
-            <p className={`${styles.eyebrow} ${styles.heroItem1}`}>imutaro — data engineer</p>
-            <h1 className={`${styles.heroTitle} ${styles.heroItem2}`}>
-              周りの価値を、最大化するエンジニアへ。
-            </h1>
+            <p className={`${styles.eyebrow} ${styles.heroItem1}`}>
+              <ShinyText text="imutaro — data engineer" color="#5b6572" shineColor="#00add8" speed={4} />
+            </p>
+            <SplitText
+              tag="h1"
+              text="周りの価値を、最大化するエンジニアへ。"
+              className={styles.heroTitle}
+              splitType="chars"
+              smartWrap={false}
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              delay={40}
+              textAlign="left"
+            />
             <p className={`${styles.heroLead} ${styles.heroItem3}`}>
               2026年新卒のデータエンジニア。まだ道の途中だからこそ、データ基盤とAI活用に向き合いながら、日々の学びをここに記録しています。
             </p>
