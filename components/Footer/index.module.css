@@ -1,6 +1,7 @@
 .footer {
-  padding: 16px 24px;
+  padding: 48px 24px;
   text-align: center;
-  color: var(--color-text-main);
+  color: var(--color-sub);
+  font-family: var(--font-mono);
   font-size: 0.8rem;
 }

@@ -1,11 +1,5 @@
 .main {
-  width: 720px;
+  max-width: 768px;
   margin: 0 auto;
-}
-
-@media (max-width: 640px) {
-  .main {
-    width: auto;
-    padding: 24px;
-  }
+  padding: 0 24px;
 }

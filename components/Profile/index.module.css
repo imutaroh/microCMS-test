@@ -1,31 +1,62 @@
 .wrapper {
   margin: 4rem 0;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.tab {
   display: flex;
-  gap: 24px;
-  border-top: 1px solid var(--color-border-light);
-  padding-top: 2rem;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-line);
+  background-color: var(--color-code-bg);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-sub);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.body {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
 }
 
 .icon {
   display: block;
-  width: 96px;
-  height: 96px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .content {
   flex: 1;
+  min-width: 0;
 }
 
 .name {
   font-size: 1rem;
-  font-weight: bold;
-  padding-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  padding-bottom: 0.4rem;
 }
 
 .profile {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  color: var(--color-sub);
+  line-height: 1.8;
 }
 
 @media (max-width: 640px) {
