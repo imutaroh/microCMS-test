@@ -12,8 +12,6 @@
 .heroOuter {
   position: relative;
   overflow: hidden;
-  /* 柔らかいグレーの帯。下端でページ背景色に溶ける */
-  background: linear-gradient(180deg, #eceff3 0%, #f0f2f6 70%, var(--color-bg) 100%);
 }
 
 .hero {
@@ -66,44 +64,19 @@
 }
 
 .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   font-family: var(--font-mono);
-  font-size: 0.9rem;
-  color: var(--color-sub);
+  font-size: 0.85rem;
+  color: var(--color-accent);
   letter-spacing: 0.04em;
   margin-bottom: 24px;
 }
 
-.eyebrowName {
-  color: var(--color-accent);
-}
-
-.eyebrowSep {
-  opacity: 0.6;
-}
-
 .heroTitle {
   /* 改行はテキスト側の \n で3行に固定している(SplitTextがpre-lineで尊重する) */
-  font-family: var(--font-display), serif;
-  font-size: clamp(1.8rem, 4.4vw, 4.2rem);
-  line-height: 1.32;
+  font-size: clamp(1.7rem, 4.2vw, 4rem);
+  line-height: 1.25;
   font-weight: 700;
-  letter-spacing: 0.06em;
   color: var(--color-ink);
-}
-
-/* 句点の代わりに置く青いリング(サイトのダイヤルモチーフ) */
-.heroTitle::after {
-  content: '';
-  display: inline-block;
-  width: 0.32em;
-  height: 0.32em;
-  margin-left: 0.14em;
-  border: 0.055em solid var(--color-accent);
-  border-radius: 50%;
-  vertical-align: 0.02em;
 }
 
 .heroLead {
@@ -111,7 +84,6 @@
   color: var(--color-sub);
   font-size: 1.05rem;
   max-width: 40em;
-  white-space: pre-line;
 }
 
 .heroCta {
@@ -127,14 +99,13 @@
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   font-size: 0.95rem;
   font-weight: 500;
   transition:
     background-color 0.15s ease,
     color 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+    border-color 0.15s ease;
 }
 
 .ctaArrow {
@@ -151,7 +122,6 @@
 .ctaPrimary {
   background-color: var(--color-accent);
   color: #fff;
-  box-shadow: 0 10px 24px -12px rgba(37, 99, 235, 0.6);
 }
 
 .ctaPrimary:hover {
@@ -165,9 +135,7 @@
 
 .ctaSecondary {
   border: 1px solid var(--color-line);
-  background-color: #fff;
   color: var(--color-ink);
-  box-shadow: 0 2px 8px rgba(26, 35, 48, 0.05);
 }
 
 .ctaSecondary:hover {
@@ -180,20 +148,19 @@
 .heroCard {
   position: relative;
   z-index: 1;
-  flex: 0 0 320px;
-  width: 320px;
-  border: 1px solid rgba(227, 232, 237, 0.9);
-  border-radius: 16px;
+  flex: 0 0 300px;
+  width: 300px;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
   background-color: #fff;
-  box-shadow:
-    0 32px 64px -36px rgba(26, 35, 48, 0.3),
-    0 4px 16px rgba(26, 35, 48, 0.05);
+  box-shadow: 0 24px 48px -32px rgba(26, 35, 48, 0.28);
+  transform: rotate(1.5deg);
   transition: transform 0.25s ease;
   overflow: hidden;
 }
 
 .heroCard:hover {
-  transform: translateY(-3px);
+  transform: rotate(0deg) translateY(-2px);
 }
 
 .cardTab {
@@ -244,18 +211,9 @@
   text-align: right;
 }
 
-.cardTabCode {
-  margin-left: auto;
-  opacity: 0.6;
-}
-
 .cardFooter {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   padding: 16px 20px;
   border-top: 1px solid var(--color-line);
-  background-color: var(--color-code-bg);
   font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--color-sub);
@@ -381,7 +339,7 @@
   /* ヒーローのノードと同じ「点+リング」 */
   box-shadow:
     0 0 0 3px var(--color-bg),
-    0 0 0 4px rgba(37, 99, 235, 0.35);
+    0 0 0 4px rgba(0, 135, 168, 0.35);
 }
 
 .logHash {
@@ -459,10 +417,10 @@
 @keyframes statusPulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.35);
+    box-shadow: 0 0 0 0 rgba(0, 173, 216, 0.35);
   }
   50% {
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0);
+    box-shadow: 0 0 0 4px rgba(0, 173, 216, 0);
   }
 }
 

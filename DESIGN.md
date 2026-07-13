@@ -18,8 +18,8 @@
 | `--color-bg` | `#fafbfc` | ページ背景 |
 | `--color-ink` | `#1a2330` | 見出し・本文の主文字色 |
 | `--color-sub` | `#5b6572` | 補助テキスト・メタ情報 |
-| `--color-accent` | `#2563eb` | リンクhover・アクセント・mono見出し（ロイヤルブルー） |
-| `--color-accent-bright` | `#3b82f6` | アクセントのhover強調・点滅 |
+| `--color-accent` | `#0087a8` | リンクhover・アクセント・mono見出し |
+| `--color-accent-bright` | `#00add8` | アクセントのhover強調・点滅 |
 | `--color-line` | `#e3e8ed` | ヘアライン罫線・カード枠 |
 | `--color-code-bg` | `#f0f3f6` | コード背景・hover背景・カードタブ |
 
@@ -31,7 +31,7 @@
 
 | 役割 | フォント | 変数 | 使い所 |
 |---|---|---|---|
-| Display | Zen Old Mincho（明朝・serif） | `--font-display` | h1〜h6（globals.cssで自動適用）。見出しは明朝の静けさで品を出す |
+| Display | Space Grotesk | `--font-display` | h1〜h6（globals.cssで自動適用） |
 | Body | Zen Kaku Gothic New | `--font-body` | 本文 |
 | Mono | IBM Plex Mono | `--font-mono` | **メタデータ全般**: eyebrow・日付・タグ・ハッシュ・ラベル・パンくず |
 
@@ -81,7 +81,7 @@ About               ← title: 1.6rem / 700 / ink
 
 | ページ | 演出 | 構成 |
 |---|---|---|
-| `/`（LP） | hero=柔らかいグレー帯＋大きな円弧＋光る青ノード（HeroArcs, 静的）。SplitText/ClickSpark/FluidCursorは継続 | hero + セクション。見出しの句点は青リング（ダイヤルモチーフ） |
+| `/`（LP） | フル（DotGrid, SplitText, ShinyText, ClickSpark, FluidCursor） | hero + セクション |
 | `/blog`, `/tags/*`, `/search` | 演出なし | eyebrow付きページ見出し + ヘアライン行リスト + monoピルのタグ |
 | `/articles/*` | 演出なし | mono メタ → 見出し → 本文720px。読みやすさ最優先 |
 | 404 | なし | mono `404` + 一言 + 帰りのリンク |

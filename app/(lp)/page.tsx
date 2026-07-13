@@ -2,9 +2,10 @@ import Link from 'next/link';
 import { getList } from '@/libs/microcms';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
+import DotGrid from '@/components/DotGrid';
 import SplitText from '@/components/SplitText';
+import ShinyText from '@/components/ShinyText';
 import BrandIcon from '@/components/BrandIcon';
-import HeroArcs from './HeroArcs';
 import LearningLog from './LearningLog';
 import MidStreamBackground from './MidStreamBackground';
 import styles from './page.module.css';
@@ -48,17 +49,24 @@ export default async function Page() {
   return (
     <>
       <section className={styles.heroOuter}>
-        <HeroArcs />
+        <DotGrid
+          baseColor="#d5dde3"
+          activeColor="#00add8"
+          dotSize={4}
+          gap={28}
+          proximity={110}
+          shockRadius={200}
+          shockStrength={4}
+          style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', padding: 0 }}
+        />
         <div className={styles.hero}>
           <div className={styles.heroMain}>
             <p className={`${styles.eyebrow} ${styles.heroItem1}`}>
-              <span className={styles.eyebrowName}>imutaro</span>
-              <span className={styles.eyebrowSep}>—</span>
-              data engineer
+              <ShinyText text="imutaro — data engineer" color="#5b6572" shineColor="#00add8" speed={4} />
             </p>
             <SplitText
               tag="h1"
-              text={'周りの価値を、\n最大化する\nエンジニアへ'}
+              text={'周りの価値を、\n最大化する\nエンジニアへ。'}
               className={styles.heroTitle}
               splitType="chars"
               smartWrap={false}
@@ -68,7 +76,7 @@ export default async function Page() {
               textAlign="left"
             />
             <p className={`${styles.heroLead} ${styles.heroItem3}`}>
-              {'2026年新卒のデータエンジニア。まだ道の途中だからこそ、\nデータ基盤とAI活用に向き合いながら、\n日々の学びをここに記録しています。'}
+              2026年新卒のデータエンジニア。まだ道の途中だからこそ、データ基盤とAI活用に向き合いながら、日々の学びをここに記録しています。
             </p>
             <div className={`${styles.heroCta} ${styles.heroItem4}`}>
               <Link href="/blog" className={styles.ctaPrimary}>
@@ -120,7 +128,6 @@ export default async function Page() {
             <div className={styles.cardTab}>
               <span className={styles.cardDot} />
               profile.json
-              <span className={styles.cardTabCode}>{'</>'}</span>
             </div>
             <dl className={styles.cardBody}>
               {PROFILE_FIELDS.map((field) => (
@@ -130,10 +137,7 @@ export default async function Page() {
                 </div>
               ))}
             </dl>
-            <div className={styles.cardFooter}>
-              <BrandIcon name="github" size={13} />
-              github.com/imutaroh
-            </div>
+            <div className={styles.cardFooter}>github.com/imutaroh</div>
           </div>
         </div>
       </section>
