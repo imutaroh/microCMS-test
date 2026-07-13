@@ -66,7 +66,7 @@ export default async function Page() {
             </p>
             <SplitText
               tag="h1"
-              text="周りの価値を、最大化するエンジニアへ。"
+              text={'周りの価値を、\n最大化する\nエンジニアへ。'}
               className={styles.heroTitle}
               splitType="chars"
               smartWrap={false}

@@ -160,12 +160,17 @@ const SplitText: React.FC<SplitTextProps> = ({
   );
 
   const renderTag = () => {
+    // text内の \n を改行として尊重する（reduceWhiteSpace: false と対で機能する）
+    const hasManualBreaks = text.includes('\n');
     const style: React.CSSProperties = {
       textAlign,
       wordWrap: 'break-word',
-      willChange: 'transform, opacity'
+      willChange: 'transform, opacity',
+      ...(hasManualBreaks ? { whiteSpace: 'pre-line' } : {})
     };
-    const classes = `split-parent overflow-hidden inline-block whitespace-normal ${className}`;
+    const classes = `split-parent overflow-hidden inline-block ${
+      hasManualBreaks ? '' : 'whitespace-normal'
+    } ${className}`;
     const Tag = (tag || 'p') as React.ElementType;
 
     return (

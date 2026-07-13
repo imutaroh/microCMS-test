@@ -71,15 +71,11 @@
 }
 
 .heroTitle {
-  /* keep-all で「最大化するエンジニアへ。」(12文字)が1行の最小単位になるため、
-     テキストカラム幅(全体 - カード300px - gap)に12文字が収まる係数にする */
+  /* 改行はテキスト側の \n で3行に固定している(SplitTextがpre-lineで尊重する) */
   font-size: clamp(1.7rem, 4.2vw, 4rem);
-  line-height: 1.2;
+  line-height: 1.25;
   font-weight: 700;
   color: var(--color-ink);
-  max-width: 16ch;
-  text-wrap: balance;
-  word-break: keep-all;
 }
 
 .heroLead {
