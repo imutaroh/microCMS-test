@@ -21,9 +21,10 @@
   justify-content: space-between;
   gap: 64px;
   max-width: 1200px;
-  min-height: 70vh;
   margin: 0 auto;
-  padding: 48px 24px;
+  /* min-heightで縦中央寄せすると縦長画面で余白が間延びするため、
+     コンテンツの高さ + 上下パディングで決める */
+  padding: 56px 24px 80px;
 }
 
 .heroMain {
