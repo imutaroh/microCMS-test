@@ -7,12 +7,16 @@ import PublishedDate from '../Date';
 
 type Props = {
   article: Article;
+  index?: number;
 };
 
-export default function ArticleListItem({ article }: Props) {
+export default function ArticleListItem({ article, index }: Props) {
   return (
     <li className={styles.list}>
       <Link href={`/articles/${article.id}`} className={styles.link}>
+        {index !== undefined && (
+          <span className={styles.index}>{String(index + 1).padStart(3, '0')}</span>
+        )}
         {article.thumbnail ? (
           <picture>
             <source
@@ -50,6 +54,9 @@ export default function ArticleListItem({ article }: Props) {
             <PublishedDate date={article.publishedAt || article.createdAt} />
           </dd>
         </dl>
+        <span className={styles.arrow} aria-hidden="true">
+          →
+        </span>
       </Link>
     </li>
   );

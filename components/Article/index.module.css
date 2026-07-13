@@ -4,9 +4,52 @@
   align-items: stretch;
 }
 
+.head {
+  position: relative;
+  padding-top: 16px;
+}
+
+/* PageHeadと同じ、LPのDotGridを静的に反響させるドットパターン */
+.head::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -24px;
+  right: -48px;
+  width: 340px;
+  height: 200px;
+  background-image: radial-gradient(circle, #d5dde3 2px, transparent 2px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse at top right, #000 20%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse at top right, #000 20%, transparent 72%);
+  pointer-events: none;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--color-accent);
+  background: radial-gradient(circle, var(--color-accent) 0 2px, transparent 2.5px);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
 .title {
-  font-size: 2rem;
-  line-height: 1.35;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  line-height: 1.4;
   font-weight: 700;
   color: var(--color-ink);
   text-wrap: balance;
@@ -73,10 +116,13 @@
   margin: 2.8rem 0 1rem;
 }
 
+/* 見出しにアクセントバー: 記事内の道しるべ */
 .content > h2 {
   font-size: 1.5rem;
   font-weight: bold;
   margin: 2.8em 0 1rem;
+  padding-left: 14px;
+  border-left: 3px solid var(--color-accent);
 }
 
 .content > h3 {
@@ -102,12 +148,24 @@
   line-height: 2;
 }
 
+/* インラインコード（preの外のcode） */
+.content code {
+  font-family: var(--font-mono), menlo, inconsolata, monospace;
+  font-size: 0.88em;
+  background-color: var(--color-code-bg);
+  border: 1px solid var(--color-line);
+  border-radius: var(--border-radius);
+  padding: 0.1em 0.4em;
+  color: var(--color-ink);
+}
+
 .content > pre {
   overflow-x: auto;
 }
 
 .content pre > code {
   background-color: var(--color-code-bg);
+  border: none;
   display: block;
   overflow-x: auto;
   padding: 16px;

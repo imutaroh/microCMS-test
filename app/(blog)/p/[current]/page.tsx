@@ -3,6 +3,7 @@ import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
+import PageHead from '@/components/PageHead';
 
 type Props = {
   params: Promise<{
@@ -28,6 +29,11 @@ export default async function Page(props: Props) {
   });
   return (
     <>
+      <PageHead
+        eyebrow={`/ blog — page ${current}`}
+        title="Blog"
+        lead={`学びと開発の記録 — 全${data.totalCount}件`}
+      />
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} current={current} />
     </>

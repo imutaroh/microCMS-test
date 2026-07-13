@@ -14,8 +14,8 @@ export default function ArticleList({ articles }: Props) {
   }
   return (
     <ul>
-      {articles.map((article) => (
-        <ArticleListItem key={article.id} article={article} />
+      {articles.map((article, index) => (
+        <ArticleListItem key={article.id} article={article} index={index} />
       ))}
     </ul>
   );

@@ -13,6 +13,22 @@ export default function Header() {
           Blog
         </Link>
         <a
+          href="https://zenn.dev/imutaroh"
+          className={styles.navLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Zenn
+        </a>
+        <a
+          href="https://note.com/imutaroh"
+          className={styles.navLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          note
+        </a>
+        <a
           href="https://github.com/imutaroh"
           className={styles.navLink}
           target="_blank"
