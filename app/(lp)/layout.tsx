@@ -21,7 +21,7 @@ export default function LpLayout({ children }: Props) {
             Blog
           </Link>
           <a
-            href="https://zenn.dev/imutaroh"
+            href="https://zenn.dev/imu_imu"
             className={styles.navLink}
             target="_blank"
             rel="noopener noreferrer"

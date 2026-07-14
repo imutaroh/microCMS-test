@@ -36,7 +36,7 @@ const PROFILE_FIELDS = [
 
 const CONTACT_LINKS = [
   { label: 'GitHub', icon: 'github', href: 'https://github.com/imutaroh', external: true },
-  { label: 'Zenn', icon: 'zenn', href: 'https://zenn.dev/imutaroh', external: true },
+  { label: 'Zenn', icon: 'zenn', href: 'https://zenn.dev/imu_imu', external: true },
   { label: 'note', icon: 'note', href: 'https://note.com/imutaroh', external: true },
   { label: 'X', icon: 'x', href: 'https://x.com/imutaroh', external: true },
   { label: 'Email', icon: null, href: 'mailto:contact@example.com', external: false },
@@ -100,7 +100,7 @@ export default async function Page() {
                 GitHub
               </a>
               <a
-                href="https://zenn.dev/imutaroh"
+                href="https://zenn.dev/imu_imu"
                 className={styles.ctaSecondary}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -230,25 +230,35 @@ export default async function Page() {
             <p className={styles.sectionEyebrow}>05 / zenn &amp; note</p>
             <h2 className={styles.sectionTitle}>Zenn / note の記事</h2>
           </div>
-          <ul className={styles.articles}>
-            {externalArticles.map((article, index) => (
-              <li className={styles.articleRow} key={article.url}>
+          <ul className={styles.externalGrid}>
+            {externalArticles.map((article) => (
+              <li key={article.url}>
                 <a
                   href={article.url}
-                  className={styles.articleLink}
+                  className={styles.externalCard}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className={styles.articleTitleGroup}>
-                    <span className={styles.articleIndex}>
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span className={styles.articleTitle}>{article.title}</span>
-                  </span>
-                  <span className={styles.articleMeta}>
-                    <PublishedDate date={article.publishedAt} />
-                    <span className={styles.externalBadge} data-source={article.source}>
+                  {article.thumbnail ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={article.thumbnail}
+                      alt=""
+                      className={styles.externalThumb}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={styles.externalThumbFallback} aria-hidden="true">
                       {article.source === 'zenn' ? 'Zenn' : 'note'}
+                    </div>
+                  )}
+                  <span className={styles.externalBody}>
+                    <span className={styles.externalTitle}>{article.title}</span>
+                    <span className={styles.externalMeta}>
+                      <PublishedDate date={article.publishedAt} />
+                      <span className={styles.externalBadge} data-source={article.source}>
+                        {article.source === 'zenn' ? 'Zenn' : 'note'}
+                      </span>
                     </span>
                   </span>
                 </a>

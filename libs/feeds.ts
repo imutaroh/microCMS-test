@@ -7,10 +7,11 @@ export type ExternalArticle = {
   url: string;
   publishedAt: string;
   source: ExternalSource;
+  thumbnail: string | null;
 };
 
 const FEEDS: { source: ExternalSource; url: string }[] = [
-  { source: 'zenn', url: 'https://zenn.dev/imutaroh/feed' },
+  { source: 'zenn', url: 'https://zenn.dev/imu_imu/feed' },
   { source: 'note', url: 'https://note.com/imutaroh/rss' },
 ];
 
@@ -25,11 +26,17 @@ async function fetchFeed(source: ExternalSource, url: string): Promise<ExternalA
       .toArray()
       .map((item) => {
         const $item = $(item);
+        // サムネイル: note は media:thumbnail、Zenn は enclosure(OGP画像)
+        const thumbnail =
+          $item.find('media\\:thumbnail').first().text().trim() ||
+          $item.find('enclosure').first().attr('url') ||
+          null;
         return {
           title: $item.find('title').first().text().trim(),
           url: $item.find('link').first().text().trim(),
           publishedAt: $item.find('pubDate').first().text().trim(),
           source,
+          thumbnail,
         };
       })
       .filter((a) => a.title && a.url);
