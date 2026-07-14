@@ -504,6 +504,19 @@
   color: var(--color-accent-bright);
 }
 
+/* Zenn/note の出どころバッジ(monoピル) */
+.externalBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 12px;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-sub);
+  flex-shrink: 0;
+}
+
 /* --- contact --- */
 
 .contact {

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getList } from '@/libs/microcms';
+import { getExternalArticles } from '@/libs/feeds';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
 import DotGrid from '@/components/DotGrid';
@@ -42,9 +43,13 @@ const CONTACT_LINKS = [
 ] as const;
 
 export default async function Page() {
-  const data = await getList({
-    limit: LATEST_ARTICLES_LIMIT,
-  });
+  const [data, externalArticles] = await Promise.all([
+    getList({
+      limit: LATEST_ARTICLES_LIMIT,
+    }),
+    getExternalArticles(),
+  ]);
+  const contactNumber = externalArticles.length > 0 ? '06' : '05';
 
   return (
     <>
@@ -219,9 +224,43 @@ export default async function Page() {
         </Link>
       </section>
 
+      {externalArticles.length > 0 && (
+        <section className={styles.section}>
+          <div className={styles.sectionHead}>
+            <p className={styles.sectionEyebrow}>05 / zenn &amp; note</p>
+            <h2 className={styles.sectionTitle}>Zenn / note の記事</h2>
+          </div>
+          <ul className={styles.articles}>
+            {externalArticles.map((article, index) => (
+              <li className={styles.articleRow} key={article.url}>
+                <a
+                  href={article.url}
+                  className={styles.articleLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className={styles.articleTitleGroup}>
+                    <span className={styles.articleIndex}>
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className={styles.articleTitle}>{article.title}</span>
+                  </span>
+                  <span className={styles.articleMeta}>
+                    <PublishedDate date={article.publishedAt} />
+                    <span className={styles.externalBadge} data-source={article.source}>
+                      {article.source === 'zenn' ? 'Zenn' : 'note'}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <section className={`${styles.section} ${styles.sectionEnd}`}>
         <div className={styles.sectionHead}>
-          <p className={styles.sectionEyebrow}>05 / contact</p>
+          <p className={styles.sectionEyebrow}>{contactNumber} / contact</p>
           <h2 className={styles.sectionTitle}>Contact</h2>
         </div>
         <ul className={styles.contact}>
