@@ -17,20 +17,21 @@
 .hero {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 64px;
+  gap: 48px;
   max-width: 1200px;
   margin: 0 auto;
   /* min-heightで縦中央寄せすると縦長画面で余白が間延びするため、
      コンテンツの高さ + 上下パディングで決める */
   padding: 56px 24px 80px;
+  text-align: center;
 }
 
 .heroMain {
   position: relative;
   z-index: 1;
-  flex: 1 1 480px;
+  max-width: 760px;
   min-width: 0;
 }
 
@@ -81,6 +82,8 @@
 
 .heroLead {
   margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
   color: var(--color-sub);
   font-size: 1.05rem;
   max-width: 40em;
@@ -91,6 +94,7 @@
   gap: 16px;
   margin-top: 40px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .ctaPrimary,
@@ -148,13 +152,14 @@
 .heroCard {
   position: relative;
   z-index: 1;
-  flex: 0 0 300px;
-  width: 300px;
+  width: 100%;
+  max-width: 640px;
+  text-align: left;
   border: 1px solid var(--color-line);
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 24px 48px -32px rgba(26, 35, 48, 0.28);
-  transform: rotate(1.5deg);
+  transform: rotate(0.6deg);
   transition: transform 0.25s ease;
   overflow: hidden;
 }
@@ -184,20 +189,18 @@
 }
 
 .cardBody {
-  padding: 20px 20px 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 32px;
+  padding: 16px 20px;
 }
 
 .cardRow {
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 8px 0;
-  border-bottom: 1px dashed var(--color-line);
+  gap: 8px;
+  padding: 6px 0;
   font-size: 0.85rem;
-}
-
-.cardRow:last-child {
-  border-bottom: none;
 }
 
 .cardKey {
@@ -651,16 +654,8 @@
 }
 
 @media (max-width: 900px) {
-  .hero {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 48px;
-  }
-
   .heroCard {
-    align-self: stretch;
-    width: 100%;
-    max-width: 360px;
+    max-width: 480px;
     transform: none;
   }
 
@@ -673,6 +668,11 @@
   .hero {
     min-height: auto;
     padding: 40px 24px;
+  }
+
+  .heroTitle {
+    /* 「最大化するエンジニアへ。」(12文字)が390px幅でも1行に収まるサイズ */
+    font-size: clamp(1.3rem, 6vw, 1.7rem);
   }
 
   .section {

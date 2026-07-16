@@ -71,14 +71,14 @@ export default async function Page() {
             </p>
             <SplitText
               tag="h1"
-              text={'周りの価値を、\n最大化する\nエンジニアへ。'}
+              text={'周りの価値を、\n最大化するエンジニアへ。'}
               className={styles.heroTitle}
               splitType="chars"
               smartWrap={false}
               from={{ opacity: 0, y: 40 }}
               to={{ opacity: 1, y: 0 }}
               delay={40}
-              textAlign="left"
+              textAlign="center"
             />
             <p className={`${styles.heroLead} ${styles.heroItem3}`}>
               2026年新卒のデータエンジニア。まだ道の途中だからこそ、データ基盤とAI活用に向き合いながら、日々の学びをここに記録しています。
