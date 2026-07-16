@@ -12,6 +12,11 @@
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--color-ink);
+  letter-spacing: 0.02em;
+}
+
+.logoTld {
+  color: var(--color-accent);
 }
 
 .nav {

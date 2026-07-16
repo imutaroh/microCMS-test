@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { SITE_NAME } from '@/constants';
-import FluidCursor from '@/components/FluidCursor';
 import ClickSpark from '@/components/ClickSpark';
 import BrandIcon from '@/components/BrandIcon';
 import styles from './layout.module.css';
@@ -14,7 +12,7 @@ export default function LpLayout({ children }: Props) {
     <ClickSpark sparkColor="#0087a8" sparkSize={9} sparkRadius={16} sparkCount={8}>
       <header className={styles.header}>
         <Link href="/" className={styles.logo}>
-          {SITE_NAME}
+          imutaro<span className={styles.logoTld}>.com</span>
         </Link>
         <nav className={styles.nav}>
           <Link href="/blog" className={styles.navLink}>
@@ -59,7 +57,6 @@ export default function LpLayout({ children }: Props) {
         </nav>
       </header>
       <main>{children}</main>
-      <FluidCursor />
     </ClickSpark>
   );
 }

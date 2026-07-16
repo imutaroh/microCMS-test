@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { SITE_NAME } from '@/constants';
 import BrandIcon from '@/components/BrandIcon';
 import styles from './index.module.css';
 
@@ -7,7 +6,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.logo}>
-        {SITE_NAME}
+        imutaro<span className={styles.logoTld}>.com</span>
       </Link>
       <nav className={styles.nav}>
         <Link href="/blog" className={styles.navLink}>
