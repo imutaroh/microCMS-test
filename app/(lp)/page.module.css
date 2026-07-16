@@ -19,12 +19,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 48px;
   max-width: 1200px;
   margin: 0 auto;
-  /* min-heightで縦中央寄せすると縦長画面で余白が間延びするため、
-     コンテンツの高さ + 上下パディングで決める */
-  padding: 56px 24px 80px;
+  /* ヘッダー込みで1画面に収まる高さに抑える */
+  padding: 88px 24px 104px;
   text-align: center;
 }
 
@@ -76,7 +74,7 @@
   /* 改行はテキスト側の \n で2行に固定している(SplitTextがpre-lineで尊重する)。
      2行目「最大化するエンジニアへ」(11文字)がどの画面幅でも折り返さないよう、
      11文字ぶんが常に収まるサイズをvwから直接導出する */
-  font-size: min(3.4rem, 6.8vw);
+  font-size: min(3.8rem, 7vw);
   line-height: 1.3;
   font-weight: 700;
   color: var(--color-ink);
@@ -279,7 +277,45 @@
 .section {
   max-width: 1040px;
   margin: 0 auto;
-  padding: 96px 24px 0;
+  padding: 72px 24px 0;
+}
+
+/* Learning Log と Stack を横並びにして中盤の縦を圧縮する */
+.midGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 64px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.midGrid .section {
+  max-width: none;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .midGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* About本文と profile.json カードの2カラム */
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .aboutGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutGrid .heroCard {
+    justify-self: center;
+  }
 }
 
 .sectionEnd {

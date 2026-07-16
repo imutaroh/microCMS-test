@@ -3,7 +3,6 @@ import { getList } from '@/libs/microcms';
 import { getExternalArticles } from '@/libs/feeds';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
-import DotGrid from '@/components/DotGrid';
 import SplitText from '@/components/SplitText';
 import ShinyText from '@/components/ShinyText';
 import BrandIcon from '@/components/BrandIcon';
@@ -54,16 +53,6 @@ export default async function Page() {
   return (
     <>
       <section className={styles.heroOuter}>
-        <DotGrid
-          baseColor="#d5dde3"
-          activeColor="#00add8"
-          dotSize={4}
-          gap={28}
-          proximity={110}
-          shockRadius={200}
-          shockStrength={4}
-          style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', padding: 0 }}
-        />
         <div className={styles.hero}>
           <div className={styles.heroMain}>
             <p className={`${styles.eyebrow} ${styles.heroItem1}`}>
@@ -131,7 +120,26 @@ export default async function Page() {
             </div>
           </div>
 
-          <div className={`${styles.heroCard} ${styles.heroItem5}`} aria-hidden="true">
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <p className={styles.sectionEyebrow}>01 / about</p>
+          <h2 className={styles.sectionTitle}>About</h2>
+        </div>
+        <div className={styles.aboutGrid}>
+          <div className={styles.aboutBody}>
+            <p>
+              福岡で、D2Cのデータ基盤を作って活用しながらAIを推進していくチームで働いています。 Claude
+              Codeのようなエージェント型のツールをどう日々の業務に組み込むかを試行錯誤するのが好きです。
+            </p>
+            <p>
+              学んだことをそのままにせず記録して公開するのは、後から自分で見返せるようにするためと、
+              同じところでつまずいている誰かの役に立てばという理由からです。
+            </p>
+          </div>
+          <div className={styles.heroCard} aria-hidden="true">
             <div className={styles.cardTab}>
               <span className={styles.cardDot} />
               profile.json
@@ -154,50 +162,35 @@ export default async function Page() {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.sectionHead}>
-          <p className={styles.sectionEyebrow}>01 / about</p>
-          <h2 className={styles.sectionTitle}>About</h2>
-        </div>
-        <div className={styles.aboutBody}>
-          <p>
-            福岡で、D2Cのデータ基盤を作って活用しながらAIを推進していくチームで働いています。 Claude
-            Codeのようなエージェント型のツールをどう日々の業務に組み込むかを試行錯誤するのが好きです。
-          </p>
-          <p>
-            学んだことをそのままにせず記録して公開するのは、後から自分で見返せるようにするためと、
-            同じところでつまずいている誰かの役に立てばという理由からです。
-          </p>
-        </div>
-      </section>
-
       <div className={styles.midBand}>
         <MidStreamBackground />
 
-        <section className={styles.section}>
-          <div className={styles.sectionHead}>
-            <p className={styles.sectionEyebrow}>02 / log</p>
-            <h2 className={styles.sectionTitle}>Learning Log</h2>
-          </div>
-          <LearningLog entries={LOG_ENTRIES} />
-        </section>
+        <div className={styles.midGrid}>
+          <section className={styles.section}>
+            <div className={styles.sectionHead}>
+              <p className={styles.sectionEyebrow}>02 / log</p>
+              <h2 className={styles.sectionTitle}>Learning Log</h2>
+            </div>
+            <LearningLog entries={LOG_ENTRIES} />
+          </section>
 
-        <section className={styles.section}>
-          <div className={styles.sectionHead}>
-            <p className={styles.sectionEyebrow}>03 / stack</p>
-            <h2 className={styles.sectionTitle}>Stack</h2>
-          </div>
-          <ul className={styles.stack}>
-            {STACK_ENTRIES.map((item) => (
-              <li className={styles.stackRow} key={item.name}>
-                <span className={styles.stackName}>{item.name}</span>
-                <span className={styles.stackStatus} data-status={item.status}>
-                  {item.status}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <section className={styles.section}>
+            <div className={styles.sectionHead}>
+              <p className={styles.sectionEyebrow}>03 / stack</p>
+              <h2 className={styles.sectionTitle}>Stack</h2>
+            </div>
+            <ul className={styles.stack}>
+              {STACK_ENTRIES.map((item) => (
+                <li className={styles.stackRow} key={item.name}>
+                  <span className={styles.stackName}>{item.name}</span>
+                  <span className={styles.stackStatus} data-status={item.status}>
+                    {item.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </div>
 
       <section className={styles.section}>
