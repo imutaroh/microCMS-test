@@ -7,6 +7,28 @@
   white-space: nowrap;
 }
 
+/* 訪問者が打った文字を消すときは折り返しを許可する(長文対策) */
+.lineSoft {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* 入力モード */
+.editable {
+  display: block;
+  min-height: 1.3em;
+  outline: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  caret-color: var(--color-accent);
+}
+
+.editable:empty::before {
+  content: 'なにか入力してみてください';
+  color: var(--color-line);
+  pointer-events: none;
+}
+
 .char {
   visibility: visible;
 }
