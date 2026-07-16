@@ -78,6 +78,8 @@ const DotGrid: React.FC<DotGridProps> = ({
     lastX: 0,
     lastY: 0
   });
+  const lastActivityRef = useRef(0);
+  const startLoopRef = useRef<() => void>(() => {});
 
   const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor]);
   const activeRgb = useMemo(() => hexToRgb(activeColor), [activeColor]);
@@ -133,7 +135,10 @@ const DotGrid: React.FC<DotGridProps> = ({
     if (!circlePath) return;
 
     let rafId: number;
+    let running = false;
     const proxSq = proximity * proximity;
+    // マウスが止まってから描画ループを止めるまでの猶予
+    const idleMs = 2000;
 
     const draw = () => {
       const canvas = canvasRef.current;
@@ -168,30 +173,59 @@ const DotGrid: React.FC<DotGridProps> = ({
         ctx.restore();
       }
 
+      // 操作が途絶えて全ドットが静止したらループを止める(次のmousemove/clickで再開)
+      if (performance.now() - lastActivityRef.current > idleMs) {
+        const settled = dotsRef.current.every(
+          (d) => Math.abs(d.xOffset) < 0.05 && Math.abs(d.yOffset) < 0.05
+        );
+        if (settled) {
+          running = false;
+          return;
+        }
+      }
+
       rafId = requestAnimationFrame(draw);
     };
 
-    draw();
-    return () => cancelAnimationFrame(rafId);
+    const startLoop = () => {
+      lastActivityRef.current = performance.now();
+      if (running) return;
+      running = true;
+      rafId = requestAnimationFrame(draw);
+    };
+    startLoopRef.current = startLoop;
+
+    startLoop();
+    return () => {
+      running = false;
+      cancelAnimationFrame(rafId);
+      startLoopRef.current = () => {};
+    };
   }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
 
   useEffect(() => {
-    buildGrid();
+    // 再構築後は停止中でも1度描き直す
+    const rebuild = () => {
+      buildGrid();
+      startLoopRef.current();
+    };
+    rebuild();
     let ro: ResizeObserver | null = null;
     if ('ResizeObserver' in window) {
-      ro = new ResizeObserver(buildGrid);
+      ro = new ResizeObserver(rebuild);
       wrapperRef.current && ro.observe(wrapperRef.current);
     } else {
-      (window as Window).addEventListener('resize', buildGrid);
+      (window as Window).addEventListener('resize', rebuild);
     }
     return () => {
       if (ro) ro.disconnect();
-      else window.removeEventListener('resize', buildGrid);
+      else window.removeEventListener('resize', rebuild);
     };
   }, [buildGrid]);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
+      startLoopRef.current();
       const now = performance.now();
       const pr = pointerRef.current;
       const dt = pr.lastTime ? now - pr.lastTime : 16;
@@ -241,6 +275,7 @@ const DotGrid: React.FC<DotGridProps> = ({
     };
 
     const onClick = (e: MouseEvent) => {
+      startLoopRef.current();
       const rect = canvasRef.current!.getBoundingClientRect();
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;

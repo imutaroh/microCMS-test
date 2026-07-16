@@ -32,6 +32,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
   const startTimeRef = useRef<number | null>(null);
+  const startLoopRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -89,6 +90,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
     if (!ctx) return;
 
     let animationId: number;
+    let running = false;
 
     const draw = (timestamp: number) => {
       if (!startTimeRef.current) {
@@ -123,13 +125,25 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
         return true;
       });
 
+      // 火花が尽きたらループを止める(次のクリックで再開)
+      if (sparksRef.current.length === 0) {
+        running = false;
+        return;
+      }
       animationId = requestAnimationFrame(draw);
     };
 
-    animationId = requestAnimationFrame(draw);
+    const startLoop = () => {
+      if (running) return;
+      running = true;
+      animationId = requestAnimationFrame(draw);
+    };
+    startLoopRef.current = startLoop;
 
     return () => {
+      running = false;
       cancelAnimationFrame(animationId);
+      startLoopRef.current = () => {};
     };
   }, [sparkColor, sparkSize, sparkRadius, sparkCount, duration, easeFunc, extraScale]);
 
@@ -149,6 +163,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
     }));
 
     sparksRef.current.push(...newSparks);
+    startLoopRef.current();
   };
 
   return (
