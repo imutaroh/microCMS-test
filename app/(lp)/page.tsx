@@ -3,10 +3,10 @@ import { getList } from '@/libs/microcms';
 import { getExternalArticles } from '@/libs/feeds';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
-import SplitText from '@/components/SplitText';
 import ShinyText from '@/components/ShinyText';
 import BrandIcon from '@/components/BrandIcon';
 import LearningLog from './LearningLog';
+import TypedTitle from './TypedTitle';
 import MidStreamBackground from './MidStreamBackground';
 import styles from './page.module.css';
 
@@ -58,16 +58,9 @@ export default async function Page() {
             <p className={`${styles.eyebrow} ${styles.heroItem1}`}>
               <ShinyText text="imutaro — data engineer" color="#5b6572" shineColor="#00add8" speed={4} />
             </p>
-            <SplitText
-              tag="h1"
-              text={'周りの価値を、\n最大化するエンジニアへ'}
-              className={styles.heroTitle}
-              splitType="chars"
-              smartWrap={false}
-              from={{ opacity: 0, y: 40 }}
-              to={{ opacity: 1, y: 0 }}
-              delay={40}
-              textAlign="center"
+            <TypedTitle
+              lines={['周りの価値を、', '最大化するエンジニアへ']}
+              className={`${styles.heroTitle} ${styles.heroItem2}`}
             />
             <p className={`${styles.heroLead} ${styles.heroItem3}`}>
               2026年新卒のデータエンジニア。まだ道の途中だからこそ、データ基盤とAI活用に向き合いながら、日々の学びをここに記録しています。
