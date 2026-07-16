@@ -20,39 +20,43 @@ export default function LpLayout({ children }: Props) {
           </Link>
           <a
             href="https://zenn.dev/imu_imu"
-            className={styles.navLink}
+            className={styles.navIcon}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Zenn"
+            title="Zenn"
           >
-            <BrandIcon name="zenn" size={14} />
-            Zenn
+            <BrandIcon name="zenn" size={16} />
           </a>
           <a
             href="https://note.com/imutaroh"
-            className={styles.navLink}
+            className={styles.navIcon}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="note"
+            title="note"
           >
-            <BrandIcon name="note" size={14} />
-            note
+            <BrandIcon name="note" size={16} />
           </a>
           <a
             href="https://x.com/imutaroh"
-            className={styles.navLink}
+            className={styles.navIcon}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="X"
+            title="X"
           >
-            <BrandIcon name="x" size={14} />
-            X
+            <BrandIcon name="x" size={16} />
           </a>
           <a
             href="https://github.com/imutaroh"
-            className={styles.navLink}
+            className={styles.navIcon}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub"
+            title="GitHub"
           >
-            <BrandIcon name="github" size={14} />
-            GitHub
+            <BrandIcon name="github" size={16} />
           </a>
         </nav>
       </header>

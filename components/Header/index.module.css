@@ -37,6 +37,20 @@
   color: var(--color-accent);
 }
 
+.navIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--color-sub);
+  transition: color 0.15s ease;
+}
+
+.navIcon:hover {
+  color: var(--color-accent);
+}
+
 @media (max-width: 640px) {
   .header {
     flex-wrap: wrap;
