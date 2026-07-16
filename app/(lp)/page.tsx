@@ -71,7 +71,7 @@ export default async function Page() {
             </p>
             <SplitText
               tag="h1"
-              text={'周りの価値を、\n最大化するエンジニアへ。'}
+              text={'周りの価値を、\n最大化するエンジニアへ'}
               className={styles.heroTitle}
               splitType="chars"
               smartWrap={false}
@@ -90,42 +90,44 @@ export default async function Page() {
                   →
                 </span>
               </Link>
-              <a
-                href="https://github.com/imutaroh"
-                className={styles.ctaSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BrandIcon name="github" />
-                GitHub
-              </a>
-              <a
-                href="https://zenn.dev/imu_imu"
-                className={styles.ctaSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BrandIcon name="zenn" />
-                Zenn
-              </a>
-              <a
-                href="https://note.com/imutaroh"
-                className={styles.ctaSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BrandIcon name="note" />
-                note
-              </a>
-              <a
-                href="https://x.com/imutaroh"
-                className={styles.ctaSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BrandIcon name="x" />
-                X
-              </a>
+              <div className={styles.ctaIcons}>
+                <a
+                  href="https://github.com/imutaroh"
+                  className={styles.ctaIcon}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
+                  <BrandIcon name="github" size={18} />
+                </a>
+                <a
+                  href="https://zenn.dev/imu_imu"
+                  className={styles.ctaIcon}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Zenn"
+                >
+                  <BrandIcon name="zenn" size={18} />
+                </a>
+                <a
+                  href="https://note.com/imutaroh"
+                  className={styles.ctaIcon}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="note"
+                >
+                  <BrandIcon name="note" size={18} />
+                </a>
+                <a
+                  href="https://x.com/imutaroh"
+                  className={styles.ctaIcon}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="X"
+                >
+                  <BrandIcon name="x" size={18} />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -134,14 +136,19 @@ export default async function Page() {
               <span className={styles.cardDot} />
               profile.json
             </div>
-            <dl className={styles.cardBody}>
-              {PROFILE_FIELDS.map((field) => (
-                <div className={styles.cardRow} key={field.key}>
-                  <dt className={styles.cardKey}>{field.key}</dt>
-                  <dd className={styles.cardValue}>{field.value}</dd>
-                </div>
+            <pre className={styles.cardCode}>
+              <span className={styles.cardLine}>{'{'}</span>
+              {PROFILE_FIELDS.map((field, i) => (
+                <span className={styles.cardLine} key={field.key}>
+                  {'  '}
+                  <span className={styles.cardKey}>&quot;{field.key}&quot;</span>
+                  {': '}
+                  <span className={styles.cardValue}>&quot;{field.value}&quot;</span>
+                  {i < PROFILE_FIELDS.length - 1 ? ',' : ''}
+                </span>
               ))}
-            </dl>
+              <span className={styles.cardLine}>{'}'}</span>
+            </pre>
             <div className={styles.cardFooter}>github.com/imutaroh</div>
           </div>
         </div>

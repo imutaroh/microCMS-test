@@ -73,11 +73,31 @@
 }
 
 .heroTitle {
-  /* 改行はテキスト側の \n で3行に固定している(SplitTextがpre-lineで尊重する) */
-  font-size: clamp(1.7rem, 4.2vw, 4rem);
-  line-height: 1.25;
+  /* 改行はテキスト側の \n で2行に固定している(SplitTextがpre-lineで尊重する)。
+     2行目「最大化するエンジニアへ」(11文字)がどの画面幅でも折り返さないよう、
+     11文字ぶんが常に収まるサイズをvwから直接導出する */
+  font-size: min(3.4rem, 6.8vw);
+  line-height: 1.3;
   font-weight: 700;
   color: var(--color-ink);
+}
+
+/* 句点の代わりに置くターミナルカーソル */
+.heroTitle::after {
+  content: '';
+  display: inline-block;
+  width: 0.14em;
+  height: 0.92em;
+  margin-left: 0.12em;
+  vertical-align: -0.08em;
+  background-color: var(--color-accent);
+  animation: cursorBlink 1.1s steps(2, start) infinite;
+}
+
+@keyframes cursorBlink {
+  to {
+    visibility: hidden;
+  }
 }
 
 .heroLead {
@@ -147,13 +167,40 @@
   color: var(--color-accent);
 }
 
+.ctaIcons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ctaIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--border-radius);
+  color: var(--color-sub);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.ctaIcon:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
 /* --- hero profile card --- */
 
 .heroCard {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 640px;
+  max-width: 400px;
   text-align: left;
   border: 1px solid var(--color-line);
   border-radius: 8px;
@@ -188,30 +235,27 @@
   flex-shrink: 0;
 }
 
-.cardBody {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  column-gap: 32px;
-  padding: 16px 20px;
+.cardCode {
+  margin: 0;
+  padding: 18px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.75;
+  color: var(--color-sub);
+  overflow-x: auto;
 }
 
-.cardRow {
-  display: flex;
-  gap: 8px;
-  padding: 6px 0;
-  font-size: 0.85rem;
+.cardLine {
+  display: block;
+  white-space: pre;
 }
 
 .cardKey {
-  font-family: var(--font-mono);
   color: var(--color-accent);
-  flex-shrink: 0;
 }
 
 .cardValue {
   color: var(--color-ink);
-  text-align: right;
 }
 
 .cardFooter {
@@ -429,6 +473,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .stackStatus[data-status='learning']::before {
+    animation: none;
+  }
+
+  .heroTitle::after {
     animation: none;
   }
 }
@@ -670,10 +718,6 @@
     padding: 40px 24px;
   }
 
-  .heroTitle {
-    /* 「最大化するエンジニアへ。」(12文字)が390px幅でも1行に収まるサイズ */
-    font-size: clamp(1.3rem, 6vw, 1.7rem);
-  }
 
   .section {
     padding: 64px 24px 0;
