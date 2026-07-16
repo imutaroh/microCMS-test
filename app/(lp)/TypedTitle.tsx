@@ -8,178 +8,153 @@ type Props = {
   className?: string;
 };
 
-type Mode = 'idle' | 'anim' | 'edit';
-
-// ターミナル風の見出し。
-// - ホバー: 末尾からバックスペースで消え、タイプし直されて必ず戻る
-// - クリック: 消えたあと入力モードになり、訪問者が自由に打てる(IME対応)。
-//   Enter/フォーカスアウトで訪問者の文字を消し、元のコピーを打ち直す。
-//   入力内容はこのブラウザ内だけで、どこにも保存されない。
+// ターミナル風の見出し。ホバー(タッチではタップ)で末尾からバックスペースで
+// 消え、タイプし直されて必ず戻る。1打ごとにキーボード風のタイプ音を鳴らす。
+// 音はWeb Audioでその場で合成する(音源ファイルなし・音量控えめ)。
+// ブラウザの自動再生ポリシー上、ページ内で一度もクリック等をしていない間は
+// AudioContextが動かないため無音になる(仕様)。
 export default function TypedTitle({ lines, className }: Props) {
   const total = lines.join('').length;
   const [visibleCount, setVisibleCount] = useState(total);
-  const [mode, setMode] = useState<Mode>('idle');
   const [typing, setTyping] = useState(false);
-  // 編集終了後に「訪問者の文字を消す」アニメ用。nullなら通常のlines表示
-  const [customText, setCustomText] = useState<string | null>(null);
+  const busyRef = useRef(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const editRef = useRef<HTMLSpanElement>(null);
-
-  const ERASE_MS = 45;
-  const TYPE_MS = 70;
-  const PAUSE_MS = 400;
+  const audioRef = useRef<AudioContext | null>(null);
+  const noiseRef = useRef<AudioBuffer | null>(null);
 
   useEffect(() => {
     const timers = timersRef.current;
-    return () => timers.forEach(clearTimeout);
+    return () => {
+      timers.forEach(clearTimeout);
+      audioRef.current?.close().catch(() => {});
+    };
   }, []);
-
-  useEffect(() => {
-    if (mode === 'edit') editRef.current?.focus();
-  }, [mode]);
 
   const schedule = (fn: () => void, ms: number) => {
     timersRef.current.push(setTimeout(fn, ms));
   };
 
-  const reducedMotion = () =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // count文字からゼロまで消すタイマーを張る。終わったらonDone
-  const erase = (count: number, onDone: (elapsed: number) => void) => {
-    for (let i = 1; i <= count; i++) {
-      schedule(() => setVisibleCount(count - i), ERASE_MS * i);
+  const ensureAudio = () => {
+    if (!audioRef.current) {
+      try {
+        audioRef.current = new AudioContext();
+        // キー音の芯になるホワイトノイズ(50ms)を一度だけ作る
+        const ctx = audioRef.current;
+        const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.05), ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+        noiseRef.current = buf;
+      } catch {
+        return;
+      }
     }
-    onDone(ERASE_MS * count);
+    // クリック済みならrunningになる。未クリックなら失敗して無音のまま
+    audioRef.current.resume().catch(() => {});
   };
 
-  // 元のコピーを打ち直して idle に戻す
-  const retype = (startDelay: number) => {
-    schedule(() => setCustomText(null), startDelay);
+  // メカニカルキーボード風の短いクリック音
+  const tick = () => {
+    const ctx = audioRef.current;
+    const noise = noiseRef.current;
+    if (!ctx || !noise || ctx.state !== 'running') return;
+    const t = ctx.currentTime;
+
+    // 高域のカチッ(ノイズ+バンドパス)
+    const src = ctx.createBufferSource();
+    src.buffer = noise;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = 2400 + Math.random() * 1600;
+    bp.Q.value = 1.2;
+    const g1 = ctx.createGain();
+    g1.gain.setValueAtTime(0.06, t);
+    g1.gain.exponentialRampToValueAtTime(0.0001, t + 0.045);
+    src.connect(bp).connect(g1).connect(ctx.destination);
+    src.start(t);
+
+    // 低域のコトッ(短い矩形波)
+    const osc = ctx.createOscillator();
+    osc.type = 'square';
+    osc.frequency.value = 140 + Math.random() * 60;
+    const g2 = ctx.createGain();
+    g2.gain.setValueAtTime(0.025, t);
+    g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+    osc.connect(g2).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.035);
+  };
+
+  const replay = () => {
+    if (busyRef.current) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    busyRef.current = true;
+    setTyping(true);
+    ensureAudio();
+
+    const eraseMs = 45;
+    const typeMs = 70;
+    const pauseMs = 400;
+
+    // 消す(右から左へ)
     for (let i = 1; i <= total; i++) {
-      schedule(() => setVisibleCount(i), startDelay + TYPE_MS * i);
+      schedule(() => {
+        setVisibleCount(total - i);
+        tick();
+      }, eraseMs * i);
+    }
+    // 打ち直す(左から右へ)
+    const typeStart = eraseMs * total + pauseMs;
+    for (let i = 1; i <= total; i++) {
+      schedule(() => {
+        setVisibleCount(i);
+        tick();
+      }, typeStart + typeMs * i);
     }
     schedule(() => {
       setTyping(false);
-      setMode('idle');
-    }, startDelay + TYPE_MS * total + 100);
+      busyRef.current = false;
+    }, typeStart + typeMs * total + 100);
   };
 
-  // ホバー: 消して打ち直す一往復
-  const replay = () => {
-    if (mode !== 'idle') return;
-    if (reducedMotion()) return;
-    setMode('anim');
-    setTyping(true);
-    erase(total, (elapsed) => retype(elapsed + PAUSE_MS));
-  };
-
-  // クリック: 消してから入力モードへ
-  const enterEdit = () => {
-    if (mode === 'edit') return;
-    timersRef.current.forEach(clearTimeout);
-    timersRef.current = [];
-    if (reducedMotion()) {
-      setVisibleCount(0);
-      setMode('edit');
-      return;
-    }
-    setMode('anim');
-    setTyping(true);
-    // ホバー演出の途中でも、いま見えている文字数から消し始める
-    erase(visibleCount, (elapsed) => {
-      schedule(() => {
-        setTyping(false);
-        setMode('edit');
-      }, elapsed + 80);
-    });
-  };
-
-  // 入力終了: 訪問者の文字を消して元のコピーへ
-  const finishEdit = () => {
-    if (mode !== 'edit') return;
-    const text = (editRef.current?.textContent ?? '').trim().slice(0, 60);
-    setMode('anim');
-    setTyping(true);
-    if (text.length === 0 || reducedMotion()) {
-      setCustomText(null);
-      if (reducedMotion()) {
-        setVisibleCount(total);
-        setTyping(false);
-        setMode('idle');
-        return;
-      }
-      setVisibleCount(0);
-      retype(PAUSE_MS);
-      return;
-    }
-    setCustomText(text);
-    setVisibleCount(text.length);
-    schedule(() => {
-      erase(text.length, (elapsed) => retype(elapsed + PAUSE_MS));
-    }, 350);
-  };
-
-  const displayLines = customText !== null ? [customText] : lines;
   let offset = 0;
 
   return (
     <h1
       className={`${className ?? ''} ${styles.title}`}
       aria-label={lines.join('')}
-      onMouseEnter={mode === 'idle' ? replay : undefined}
-      onClick={mode !== 'edit' ? enterEdit : undefined}
+      onMouseEnter={replay}
+      onClick={replay}
     >
-      {mode === 'edit' ? (
-        <span
-          ref={editRef}
-          className={styles.editable}
-          contentEditable
-          suppressContentEditableWarning
-          role="textbox"
-          aria-label="見出しに自由に入力できます(保存はされません)"
-          onBlur={finishEdit}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === 'Escape') {
-              e.preventDefault();
-              editRef.current?.blur();
-            }
-          }}
-        />
-      ) : (
-        displayLines.map((line, lineIndex) => {
-          const start = offset;
-          offset += line.length;
-          const end = offset;
-          const cursorHere =
-            visibleCount <= 0
-              ? lineIndex === 0
-              : visibleCount > start && visibleCount <= end;
-          const cursorPos = Math.max(0, Math.min(visibleCount - start, line.length));
-          const cursor = (
-            <span className={`${styles.cursor} ${typing ? styles.cursorSolid : ''}`} />
-          );
-          return (
-            <span
-              className={`${styles.line} ${customText !== null ? styles.lineSoft : ''}`}
-              key={lineIndex}
-              aria-hidden="true"
-            >
-              {cursorHere && cursorPos === 0 && cursor}
-              {Array.from(line).map((ch, i) => (
-                <span key={i}>
-                  <span
-                    className={start + i < visibleCount ? styles.char : styles.charHidden}
-                  >
-                    {ch}
-                  </span>
-                  {cursorHere && cursorPos === i + 1 && cursor}
+      {lines.map((line, lineIndex) => {
+        const start = offset;
+        offset += line.length;
+        const end = offset;
+        // カーソルは「最後に見えている文字」の行に置く。全消し中は先頭行。
+        const cursorHere =
+          visibleCount <= 0
+            ? lineIndex === 0
+            : visibleCount > start && visibleCount <= end;
+        // 行内でのカーソル挿入位置(この文字数ぶん表示した直後に置く)
+        const cursorPos = Math.max(0, Math.min(visibleCount - start, line.length));
+        const cursor = (
+          <span className={`${styles.cursor} ${typing ? styles.cursorSolid : ''}`} />
+        );
+        return (
+          <span className={styles.line} key={lineIndex} aria-hidden="true">
+            {cursorHere && cursorPos === 0 && cursor}
+            {Array.from(line).map((ch, i) => (
+              <span key={i}>
+                <span
+                  className={start + i < visibleCount ? styles.char : styles.charHidden}
+                >
+                  {ch}
                 </span>
-              ))}
-            </span>
-          );
-        })
-      )}
+                {cursorHere && cursorPos === i + 1 && cursor}
+              </span>
+            ))}
+          </span>
+        );
+      })}
     </h1>
   );
 }
