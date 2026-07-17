@@ -3,11 +3,10 @@ import { getList } from '@/libs/microcms';
 import { getExternalArticles } from '@/libs/feeds';
 import PublishedDate from '@/components/Date';
 import TagList from '@/components/TagList';
-import DotGrid from '@/components/DotGrid';
-import SplitText from '@/components/SplitText';
 import ShinyText from '@/components/ShinyText';
 import BrandIcon from '@/components/BrandIcon';
 import LearningLog from './LearningLog';
+import TypedTitle from './TypedTitle';
 import MidStreamBackground from './MidStreamBackground';
 import styles from './page.module.css';
 
@@ -54,31 +53,14 @@ export default async function Page() {
   return (
     <>
       <section className={styles.heroOuter}>
-        <DotGrid
-          baseColor="#d5dde3"
-          activeColor="#00add8"
-          dotSize={4}
-          gap={28}
-          proximity={110}
-          shockRadius={200}
-          shockStrength={4}
-          style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', padding: 0 }}
-        />
         <div className={styles.hero}>
           <div className={styles.heroMain}>
             <p className={`${styles.eyebrow} ${styles.heroItem1}`}>
               <ShinyText text="imutaro — data engineer" color="#5b6572" shineColor="#00add8" speed={4} />
             </p>
-            <SplitText
-              tag="h1"
-              text={'周りの価値を、\n最大化する\nエンジニアへ。'}
-              className={styles.heroTitle}
-              splitType="chars"
-              smartWrap={false}
-              from={{ opacity: 0, y: 40 }}
-              to={{ opacity: 1, y: 0 }}
-              delay={40}
-              textAlign="left"
+            <TypedTitle
+              lines={['周りの価値を、', '最大化するエンジニアへ']}
+              className={`${styles.heroTitle} ${styles.heroItem2}`}
             />
             <p className={`${styles.heroLead} ${styles.heroItem3}`}>
               2026年新卒のデータエンジニア。まだ道の途中だからこそ、データ基盤とAI活用に向き合いながら、日々の学びをここに記録しています。
@@ -90,60 +72,47 @@ export default async function Page() {
                   →
                 </span>
               </Link>
-              <a
-                href="https://github.com/imutaroh"
-                className={styles.ctaSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BrandIcon name="github" />
-                GitHub
-              </a>
-              <a
-                href="https://zenn.dev/imu_imu"
-                className={styles.ctaSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BrandIcon name="zenn" />
-                Zenn
-              </a>
-              <a
-                href="https://note.com/imutaroh"
-                className={styles.ctaSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BrandIcon name="note" />
-                note
-              </a>
-              <a
-                href="https://x.com/imutaroh"
-                className={styles.ctaSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BrandIcon name="x" />
-                X
-              </a>
+              <div className={styles.ctaIcons}>
+                <a
+                  href="https://github.com/imutaroh"
+                  className={styles.ctaIcon}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
+                  <BrandIcon name="github" size={18} />
+                </a>
+                <a
+                  href="https://zenn.dev/imu_imu"
+                  className={styles.ctaIcon}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Zenn"
+                >
+                  <BrandIcon name="zenn" size={18} />
+                </a>
+                <a
+                  href="https://note.com/imutaroh"
+                  className={styles.ctaIcon}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="note"
+                >
+                  <BrandIcon name="note" size={18} />
+                </a>
+                <a
+                  href="https://x.com/imutaroh"
+                  className={styles.ctaIcon}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="X"
+                >
+                  <BrandIcon name="x" size={18} />
+                </a>
+              </div>
             </div>
           </div>
 
-          <div className={`${styles.heroCard} ${styles.heroItem5}`} aria-hidden="true">
-            <div className={styles.cardTab}>
-              <span className={styles.cardDot} />
-              profile.json
-            </div>
-            <dl className={styles.cardBody}>
-              {PROFILE_FIELDS.map((field) => (
-                <div className={styles.cardRow} key={field.key}>
-                  <dt className={styles.cardKey}>{field.key}</dt>
-                  <dd className={styles.cardValue}>{field.value}</dd>
-                </div>
-              ))}
-            </dl>
-            <div className={styles.cardFooter}>github.com/imutaroh</div>
-          </div>
         </div>
       </section>
 
@@ -152,45 +121,69 @@ export default async function Page() {
           <p className={styles.sectionEyebrow}>01 / about</p>
           <h2 className={styles.sectionTitle}>About</h2>
         </div>
-        <div className={styles.aboutBody}>
-          <p>
-            福岡で、D2Cのデータ基盤を作って活用しながらAIを推進していくチームで働いています。 Claude
-            Codeのようなエージェント型のツールをどう日々の業務に組み込むかを試行錯誤するのが好きです。
-          </p>
-          <p>
-            学んだことをそのままにせず記録して公開するのは、後から自分で見返せるようにするためと、
-            同じところでつまずいている誰かの役に立てばという理由からです。
-          </p>
+        <div className={styles.aboutGrid}>
+          <div className={styles.aboutBody}>
+            <p>
+              福岡で、D2Cのデータ基盤を作って活用しながらAIを推進していくチームで働いています。 Claude
+              Codeのようなエージェント型のツールをどう日々の業務に組み込むかを試行錯誤するのが好きです。
+            </p>
+            <p>
+              学んだことをそのままにせず記録して公開するのは、後から自分で見返せるようにするためと、
+              同じところでつまずいている誰かの役に立てばという理由からです。
+            </p>
+          </div>
+          <div className={styles.heroCard} aria-hidden="true">
+            <div className={styles.cardTab}>
+              <span className={styles.cardDot} />
+              profile.json
+            </div>
+            <pre className={styles.cardCode}>
+              <span className={styles.cardLine}>{'{'}</span>
+              {PROFILE_FIELDS.map((field, i) => (
+                <span className={styles.cardLine} key={field.key}>
+                  {'  '}
+                  <span className={styles.cardKey}>&quot;{field.key}&quot;</span>
+                  {': '}
+                  <span className={styles.cardValue}>&quot;{field.value}&quot;</span>
+                  {i < PROFILE_FIELDS.length - 1 ? ',' : ''}
+                </span>
+              ))}
+              <span className={styles.cardLine}>{'}'}</span>
+            </pre>
+            <div className={styles.cardFooter}>github.com/imutaroh</div>
+          </div>
         </div>
       </section>
 
       <div className={styles.midBand}>
         <MidStreamBackground />
 
-        <section className={styles.section}>
-          <div className={styles.sectionHead}>
-            <p className={styles.sectionEyebrow}>02 / log</p>
-            <h2 className={styles.sectionTitle}>Learning Log</h2>
-          </div>
-          <LearningLog entries={LOG_ENTRIES} />
-        </section>
+        <div className={styles.midGrid}>
+          <section className={styles.section}>
+            <div className={styles.sectionHead}>
+              <p className={styles.sectionEyebrow}>02 / log</p>
+              <h2 className={styles.sectionTitle}>Learning Log</h2>
+            </div>
+            <LearningLog entries={LOG_ENTRIES} />
+          </section>
 
-        <section className={styles.section}>
-          <div className={styles.sectionHead}>
-            <p className={styles.sectionEyebrow}>03 / stack</p>
-            <h2 className={styles.sectionTitle}>Stack</h2>
-          </div>
-          <ul className={styles.stack}>
-            {STACK_ENTRIES.map((item) => (
-              <li className={styles.stackRow} key={item.name}>
-                <span className={styles.stackName}>{item.name}</span>
-                <span className={styles.stackStatus} data-status={item.status}>
-                  {item.status}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <section className={styles.section}>
+            <div className={styles.sectionHead}>
+              <p className={styles.sectionEyebrow}>03 / stack</p>
+              <h2 className={styles.sectionTitle}>Stack</h2>
+            </div>
+            <ul className={styles.stack}>
+              {STACK_ENTRIES.map((item) => (
+                <li className={styles.stackRow} key={item.name}>
+                  <span className={styles.stackName}>{item.name}</span>
+                  <span className={styles.stackStatus} data-status={item.status}>
+                    {item.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </div>
 
       <section className={styles.section}>
