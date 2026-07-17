@@ -14,7 +14,7 @@ const LATEST_ARTICLES_LIMIT = 3;
 
 const LOG_ENTRIES = [
   { hash: 'e7a2f19', date: '2026-07', text: 'このブログを公開' },
-  { hash: 'c41b8d3', date: '2026-06', text: 'Goの学習を開始' },
+  { hash: 'c41b8d3', date: '2026-05', text: 'Goの学習を開始' },
   { hash: 'a09c5e2', date: '2026-04', text: '新卒データエンジニアとして入社' },
   { hash: '1f0d7b4', date: '2026-03', text: '大学卒業' },
 ];
