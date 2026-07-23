@@ -35,6 +35,9 @@ export const metadata = {
     description: SITE_DESCRIPTION,
     images: '/ogp.png',
   },
+  twitter: {
+    card: 'summary_large_image',
+  },
   alternates: {
     canonical: '/',
   },
